@@ -22,21 +22,22 @@ namespace TresCoralMorris
         Vector3 touchScreenPosition;
         void Update(){
             if (Input.GetMouseButtonDown(0)) {
-            //     touchScreenPosition = Input.mousePosition;
-            //     Camera  gameCamera      = Camera.main;
-            //     Ray     touchPointToRay = gameCamera.ScreenPointToRay( touchScreenPosition );
-            //     RaycastHit hitInfo = new RaycastHit();
+                // touchScreenPosition = Input.mousePosition;
+                // Camera  gameCamera      = Camera.main;
+                // Ray     touchPointToRay = gameCamera.ScreenPointToRay( touchScreenPosition );
+                // RaycastHit hitInfo = new RaycastHit();
 
-            //     if( Physics.Raycast( touchPointToRay, out hitInfo ) ){
-            //         if( hitInfo.collider.gameObject.TryGetComponent<IMass>(out IMass mass) ){
-            //             // Debug.Log("クリック");
-            //             _masssubject.Value = mass.ID.Value;
+                // if( Physics.Raycast( touchPointToRay, out hitInfo ) ){
+                //     if( hitInfo.collider.gameObject.TryGetComponent<IMass>(out IMass mass) ){
+                //         Debug.Log("クリック"+mass.ID);
+                //         _masssubject.Value = mass;
                         
-            //             click.OnNext(Unit.Default);
-            //         }
-            //     }
-            // }
+                //         click.OnNext(Unit.Default);
+                //     }
+                // }
 
+
+                
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                 foreach (RaycastHit hit in Physics.RaycastAll(ray)){

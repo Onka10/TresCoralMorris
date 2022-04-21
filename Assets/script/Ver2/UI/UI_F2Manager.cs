@@ -10,35 +10,60 @@ public class UI_F2Manager : MonoBehaviour
     [SerializeField] TresCoralMorris.GameDate _gameDate;
 
 
-    //変更するUI
+    //変更する対象のUI
     public Image[] BUIColor = new Image[4];
     public Image[] WUIColor = new Image[4];
 
+    //Dictionaryを作成
+    Dictionary<MassColor, Color> _colorDictionary = new Dictionary<MassColor, Color> ();
+
     void Start()
     {
+        //辞書初期化
+		_colorDictionary [MassColor.Red] = Color.red;
+        _colorDictionary [MassColor.Blue] = Color.blue;
+        _colorDictionary [MassColor.Green] = Color.green;
+
         _fhaseChangeManager.Next
         .Subscribe(_ => Init())
+        .AddTo(this);
+
+        _gameDate.MyColorB
+        .Subscribe()
+        .AddTo(this);
+
+        _gameDate.MyColorW
+        .Subscribe()
         .AddTo(this);
     }
 
     private void Init(){
         //UIを初期化
-        ChangeImageB(_gameDate.MyColorB.Value,0);
-        ChangeImageW(_gameDate.MyColorW.Value,0);
+        ChangeImageB();
+        ChangeImageW();
 
         //各種購読を開始
 
     }
 
-    private void ChangeImageB(MassColor c,int UIid){
-        if(c==MassColor.Red)        BUIColor[UIid].color = Color.red;
-        else if(c==MassColor.Green) BUIColor[UIid].color = Color.green;
-        else if(c==MassColor.Blue)  BUIColor[UIid].color = Color.blue;
+    private void ChangeImageB(){
+        //マイカラー
+        BUIColor[0].color = _colorDictionary[_gameDate.MyColorB.Value];
+        //下UIのマイカラー
+        BUIColor[1].color = _colorDictionary[_gameDate.MovebaleColorB1.Value];
+        //movableカラー
+        BUIColor[2].color = _colorDictionary[_gameDate.MovebaleColorB1.Value];
+        BUIColor[3].color = _colorDictionary[_gameDate.MovebaleColorB2.Value];
+
     }
 
-    private void ChangeImageW(MassColor c,int UIid){
-        if(c==MassColor.Red)        WUIColor[UIid].color = Color.red;
-        else if(c==MassColor.Green) WUIColor[UIid].color = Color.green;
-        else if(c==MassColor.Blue)  WUIColor[UIid].color = Color.blue;
+    private void ChangeImageW(){
+        //マイカラー
+        WUIColor[0].color = _colorDictionary[_gameDate.MyColorW.Value];
+        //下UIのマイカラー
+        WUIColor[1].color = _colorDictionary[_gameDate.MovebaleColorW1.Value];
+        //movableカラー
+        WUIColor[2].color = _colorDictionary[_gameDate.MovebaleColorW1.Value];
+        WUIColor[3].color = _colorDictionary[_gameDate.MovebaleColorW2.Value];
     }
 }

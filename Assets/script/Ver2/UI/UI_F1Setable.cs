@@ -31,7 +31,7 @@ namespace TresCoralMorris{
         }
 
         private void OnReplace(CollectionReplaceEvent<int> replaceEvent) {
-            Debug.Log($"{replaceEvent.Index}番目の値が{replaceEvent.OldValue}→{replaceEvent.NewValue}に変更");
+            // Debug.Log($"{replaceEvent.Index}番目の値が{replaceEvent.OldValue}→{replaceEvent.NewValue}に変更");
 
             if(_F1Manager.TurnColor.Value==PlayerColor.Black){
                 _playerBCosts[replaceEvent.Index].text = replaceEvent.NewValue.ToString();

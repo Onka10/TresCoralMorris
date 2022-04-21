@@ -48,14 +48,14 @@ namespace TresCoralMorris
 
             //inputをうけとる
             _playerInput.Click
-            .Where(_ => _gameDate.massinstone[_playerInput.GetMass.Value.ID.Value] == PlayerColor.Empty)
+            .Where(_ => _gameDate.massinstone[_playerInput.GetMass.Value.ID] == PlayerColor.Empty)
             .Subscribe(_ => ExsecuteOfTurn())
             .AddTo(this);
         }
 
         private void ExsecuteOfTurn(){
             //マスのidを入手
-            int massID = _playerInput.GetMass.Value.ID.Value;
+            int massID = _playerInput.GetMass.Value.ID;
             //マスの色を入手
             var getmasscolor = _gameDate.mass[massID].GetComponent<IMass>().Color.Value;
 

@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
@@ -8,8 +8,14 @@ namespace TresCoralMorris
 {
     public class Mass : MonoBehaviour,IMass
     {
-        public IReadOnlyReactiveProperty<int> ID => _id;
-        private readonly ReactiveProperty<int> _id = new ReactiveProperty<int>();
+        public int ID{
+            get
+            {
+                return _id;
+            }
+        }
+
+        [SerializeField] private int _id;
 
         public int Lane {
             get{return _lane;}
@@ -37,7 +43,8 @@ namespace TresCoralMorris
 
         public void Init(int i){
             //idをセット
-            _id.Value = i;
+            _id = i;
+            Debug.Log(_id);
             //レーンをセット
             _lane = i/6;
             //ポイントをセット
@@ -54,15 +61,16 @@ namespace TresCoralMorris
         private void CheckMovablemass(){
             //数バグってます
 
+            int id=_id;
             Queue<int> queue = new Queue <int>();
             //_laneが端でないなら隣の列にいける
-            if(_lane!=0)    queue.Enqueue(_id.Value-6);
-            if(_lane!=3)    queue.Enqueue(_id.Value+6);
+            if(_lane!=0)    queue.Enqueue(id-6);
+            if(_lane!=3)    queue.Enqueue(id+6);
             //マスのポイントが端でないなら横に移動出来る
-            if(_point!=0)   queue.Enqueue(_id.Value--);
-            else            queue.Enqueue(_id.Value+5);
-            if(_point!=5)   queue.Enqueue(_id.Value++);
-            else            queue.Enqueue(_id.Value-5);
+            if(_point!=0)   queue.Enqueue(id--);
+            else            queue.Enqueue(id+5);
+            if(_point!=5)   queue.Enqueue(id++);
+            else            queue.Enqueue(id-5);
             _movebaleMass = queue.ToArray();
         }
 

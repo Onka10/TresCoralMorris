@@ -7,6 +7,7 @@ namespace TresCoralMorris{
     public class GameDate : MonoBehaviour
     {
         public GameObject[] mass = new GameObject[24];
+        public Mass[] imass = new Mass[24];
         public GameObject[] Bstone = new GameObject[7];
         public GameObject[] Wstone = new GameObject[7];
 
@@ -32,8 +33,7 @@ namespace TresCoralMorris{
 
             for(int i=0;i<24;i++){
                 //マスの初期化
-                    mass[i].AddComponent<Mass>();
-                    mass[i].GetComponent<IMass>().Init(i);
+                    imass[i].Init(i);
                     //おいている石を空に
                     massinstone[i] = PlayerColor.Empty;
             }
@@ -76,13 +76,35 @@ namespace TresCoralMorris{
 
             //見た目
             Vector3 movedpotion = mass[massid].GetComponent<Transform>().position;
-            movedpotion.y = 1.5f;
+            movedpotion.y = 1.4f;
 
             if(playerColor == PlayerColor.Black){
                 Bstone[stoneid].GetComponent<Transform>().position = movedpotion;
             }else if(playerColor == PlayerColor.White){
                 Wstone[stoneid].GetComponent<Transform>().position = movedpotion;
             }
+        }
+
+        //フェーズ2の交換がある場合のオーバーロード
+        public void SetStone(PlayerColor playerColor,int beforeMassid,int afterMassid, int stoneid){
+            //データ
+            massinstone[beforeMassid] = PlayerColor.Empty;
+            massinstone[afterMassid] = playerColor;
+
+            //見た目
+            Vector3 movedpotion = mass[afterMassid].GetComponent<Transform>().position;
+            movedpotion.y = 1.4f;
+
+            if(playerColor == PlayerColor.Black){
+                Bstone[stoneid].GetComponent<Transform>().position = movedpotion;
+            }else if(playerColor == PlayerColor.White){
+                Wstone[stoneid].GetComponent<Transform>().position = movedpotion;
+            }
+        }
+
+        //コマを消す
+        public void DeleteStone(PlayerColor playerColor,int stoneid){
+            
         }
     }
 }
