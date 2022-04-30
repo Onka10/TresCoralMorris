@@ -58,6 +58,9 @@ public class FhaseChangeManager : MonoBehaviour
 
         Debug.Log(_gameDate.MyColorW.Value+"マイカラー");
 
+        //movableカラーを計算
+        
+
         _next.OnNext(Unit.Default);
 
         END = true;

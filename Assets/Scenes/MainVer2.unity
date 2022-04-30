@@ -499,6 +499,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &200375791 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3477585252715829150, guid: 22d48c0b03261644394b9e97beb34efc, type: 3}
+  m_PrefabInstance: {fileID: 287039503}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &214042856
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,14 +694,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bPlayerMycolor: {fileID: 1004272633}
   _wPlayerMycolor: {fileID: 1327657192}
-  BPlayerMovableColor:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  WPlayerMovableColor:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   _panelB: {fileID: 553861401}
   _panelW: {fileID: 119365081}
   _gamedata: {fileID: 1629600485}
@@ -711,14 +714,14 @@ MonoBehaviour:
   _gameDate: {fileID: 1629600485}
   BUIColor:
   - {fileID: 238044655}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1918641156}
+  - {fileID: 1564589694}
+  - {fileID: 407373486}
   WUIColor:
   - {fileID: 1683017474}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 200375791}
+  - {fileID: 1030922368}
+  - {fileID: 2071966068}
 --- !u!114 &238044655 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 809590993591141439, guid: 22d48c0b03261644394b9e97beb34efc, type: 3}
@@ -1366,6 +1369,17 @@ MonoBehaviour:
   _point: 0
   SerializeColor: 0
   _movebaleMass: 00000000
+--- !u!114 &407373486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4519013810642668843, guid: 22d48c0b03261644394b9e97beb34efc, type: 3}
+  m_PrefabInstance: {fileID: 287039503}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &469703753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3152,6 +3166,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 809590995133751689, guid: 22d48c0b03261644394b9e97beb34efc, type: 3}
   m_PrefabInstance: {fileID: 287039503}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1030922368 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5517780168814358039, guid: 22d48c0b03261644394b9e97beb34efc, type: 3}
+  m_PrefabInstance: {fileID: 287039503}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1031790003 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2758746187687674974, guid: 6b9b4cd57e91bf949a7397b45974327e, type: 3}
@@ -3682,6 +3707,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 809590995133751689, guid: 6b9b4cd57e91bf949a7397b45974327e, type: 3}
   m_PrefabInstance: {fileID: 809590993265057777}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1564589694 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6212977857878394607, guid: 22d48c0b03261644394b9e97beb34efc, type: 3}
+  m_PrefabInstance: {fileID: 287039503}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1605739167
 GameObject:
   m_ObjectHideFlags: 0
@@ -4575,6 +4611,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 809590995133751688, guid: 6b9b4cd57e91bf949a7397b45974327e, type: 3}
   m_PrefabInstance: {fileID: 809590993265057777}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1918641156 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8761614442564050087, guid: 22d48c0b03261644394b9e97beb34efc, type: 3}
+  m_PrefabInstance: {fileID: 287039503}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1997659146
 GameObject:
   m_ObjectHideFlags: 0
@@ -4697,6 +4744,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2071966068 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5576105022716625598, guid: 22d48c0b03261644394b9e97beb34efc, type: 3}
+  m_PrefabInstance: {fileID: 287039503}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2076906760
@@ -5127,6 +5185,7 @@ GameObject:
   - component: {fileID: 2252234193853192553}
   - component: {fileID: 2252234193853192554}
   - component: {fileID: 2252234193853192555}
+  - component: {fileID: 2252234193853192558}
   m_Layer: 0
   m_Name: Wstone3
   m_TagString: Wstone
@@ -5134,6 +5193,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234193853192558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234193853192557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &2252234194104786956
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5227,6 +5298,7 @@ GameObject:
   - component: {fileID: 2252234194104786956}
   - component: {fileID: 2252234194104786957}
   - component: {fileID: 2252234194104786958}
+  - component: {fileID: 2252234194104786961}
   m_Layer: 0
   m_Name: Wstone4
   m_TagString: Wstone
@@ -5234,6 +5306,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234194104786961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234194104786960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &2252234194416161707
 Animator:
   serializedVersion: 3
@@ -5347,6 +5431,7 @@ GameObject:
   - component: {fileID: 2252234194416161709}
   - component: {fileID: 2252234194416161710}
   - component: {fileID: 2252234194416161707}
+  - component: {fileID: 2252234194416161713}
   m_Layer: 0
   m_Name: stone(6
   m_TagString: Bstone
@@ -5354,6 +5439,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234194416161713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234194416161712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &2252234194450385702
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5447,6 +5544,7 @@ GameObject:
   - component: {fileID: 2252234194450385702}
   - component: {fileID: 2252234194450385703}
   - component: {fileID: 2252234194450385704}
+  - component: {fileID: 2252234194450385707}
   m_Layer: 0
   m_Name: Wstone7
   m_TagString: Wstone
@@ -5454,6 +5552,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234194450385707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234194450385706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &2252234194472045218
 Animator:
   serializedVersion: 3
@@ -5567,6 +5677,7 @@ GameObject:
   - component: {fileID: 2252234194472045220}
   - component: {fileID: 2252234194472045221}
   - component: {fileID: 2252234194472045218}
+  - component: {fileID: 2252234194472045224}
   m_Layer: 0
   m_Name: stone(3
   m_TagString: Bstone
@@ -5574,6 +5685,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234194472045224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234194472045223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &2252234194559441546
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5667,6 +5790,7 @@ GameObject:
   - component: {fileID: 2252234194559441546}
   - component: {fileID: 2252234194559441547}
   - component: {fileID: 2252234194559441548}
+  - component: {fileID: 2252234194559441551}
   m_Layer: 0
   m_Name: Wstone1
   m_TagString: Wstone
@@ -5674,6 +5798,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234194559441551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234194559441550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &2252234194595466301
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5767,6 +5903,7 @@ GameObject:
   - component: {fileID: 2252234194595466301}
   - component: {fileID: 2252234194595466302}
   - component: {fileID: 2252234194595466303}
+  - component: {fileID: 2252234194595466434}
   m_Layer: 0
   m_Name: Wstone2
   m_TagString: Wstone
@@ -5774,6 +5911,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234194595466434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234194595466433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2252234194878381404
 Transform:
   m_ObjectHideFlags: 0
@@ -5904,6 +6053,7 @@ GameObject:
   - component: {fileID: 2252234194958896116}
   - component: {fileID: 2252234194958896117}
   - component: {fileID: 2252234194958896118}
+  - component: {fileID: 2252234194958896121}
   m_Layer: 0
   m_Name: Wstone5
   m_TagString: Wstone
@@ -5911,6 +6061,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234194958896121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234194958896120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &2252234195183844237
 Animator:
   serializedVersion: 3
@@ -6024,6 +6186,7 @@ GameObject:
   - component: {fileID: 2252234195183844239}
   - component: {fileID: 2252234195183844240}
   - component: {fileID: 2252234195183844237}
+  - component: {fileID: 2252234195183844243}
   m_Layer: 0
   m_Name: stone(4
   m_TagString: Bstone
@@ -6031,6 +6194,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234195183844243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234195183844242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2252234195246183228
 Transform:
   m_ObjectHideFlags: 0
@@ -6176,6 +6351,7 @@ GameObject:
   - component: {fileID: 2252234195253155874}
   - component: {fileID: 2252234195253155875}
   - component: {fileID: 2252234195253155871}
+  - component: {fileID: 2252234195253155877}
   m_Layer: 0
   m_Name: stone(0
   m_TagString: Bstone
@@ -6183,6 +6359,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234195253155877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234195253155876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2252234195684083621
 Transform:
   m_ObjectHideFlags: 0
@@ -6333,6 +6521,7 @@ GameObject:
   - component: {fileID: 2252234195685390959}
   - component: {fileID: 2252234195685390960}
   - component: {fileID: 2252234195685390957}
+  - component: {fileID: 2252234195685390963}
   m_Layer: 0
   m_Name: stone(5
   m_TagString: Bstone
@@ -6340,6 +6529,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234195685390963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234195685390962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &2252234195815759960
 Animator:
   serializedVersion: 3
@@ -6453,6 +6654,7 @@ GameObject:
   - component: {fileID: 2252234195815759962}
   - component: {fileID: 2252234195815759963}
   - component: {fileID: 2252234195815759960}
+  - component: {fileID: 2252234195815759966}
   m_Layer: 0
   m_Name: stone(1
   m_TagString: Bstone
@@ -6460,6 +6662,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234195815759966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234195815759965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &2252234195873002974
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6553,6 +6767,7 @@ GameObject:
   - component: {fileID: 2252234195873002974}
   - component: {fileID: 2252234195873002975}
   - component: {fileID: 2252234195873002976}
+  - component: {fileID: 2252234195873002979}
   m_Layer: 0
   m_Name: stone(2
   m_TagString: Bstone
@@ -6560,6 +6775,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234195873002979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234195873002978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &2252234195926621223
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6653,6 +6880,7 @@ GameObject:
   - component: {fileID: 2252234195926621223}
   - component: {fileID: 2252234195926621224}
   - component: {fileID: 2252234195926621225}
+  - component: {fileID: 2252234195926621228}
   m_Layer: 0
   m_Name: Wstone6
   m_TagString: Wstone
@@ -6660,3 +6888,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2252234195926621228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252234195926621227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

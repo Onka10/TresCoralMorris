@@ -66,48 +66,38 @@ namespace TresCoralMorris
 
         //動かす石を決める
         private void Phase21(){
+            Debug.Log("フェーズ2");
             //石を入手
             var stone = _playerInput.GetStone.Value;
             
             //マスを入手
             var mass = _playerInput.GetMass.Value;
-
-            //そのターンのマイカラー
-            MassColor mycolor = MassColor.Neu;
-
-            //ターンの判定
-            if(_turnColor.Value==PlayerColor.Black){
-                //準備
-                mycolor = _gameDate.MyColorB.Value;
-                if(!CheckClick()) return;
-                if(!CheckClick2())return;
-                if(!CheckClick3())return;
-
-                _beforeMass = mass;
-                _selectedStone = stone;
-                Phase++;
-            }else if(_turnColor.Value==PlayerColor.White){
-                mycolor = _gameDate.MyColorW.Value;
-                if(!CheckClick()) return;
-                if(!CheckClick2())return;
-                if(!CheckClick3())return;
-
-                _beforeMass = mass;
-                _selectedStone = stone;
-                Phase++;
-            }
             
+            //駄目な選択のチェック
+            // if(!CheckClick()) return;
+            // if(!CheckClick2())return;
+            // if(!CheckClick3())return;
+
+            //チェックが大丈夫なら次のフェーズへ
+            _beforeMass = mass;
+            _selectedStone = stone;
+            Phase++;
 
 
+            #region 確認用ローカル変数
             //クリックした石がプレイヤー色か確認
             bool CheckClick(){
+                // Debug.Log(stone);
+                // Debug.Log(_turnColor.Value);
                 if(stone.Color.Value == _turnColor.Value)   return true;
                 else    return false;
             }
 
-
             //クリックしたマスがマイカラーと同じ&&マスがグレー
             bool CheckClick2(){
+                //そのターンのマイカラー
+                MassColor mycolor = GetMycolorofNowPlayer();
+                
                 if(mass.Color.Value == mycolor || mass.Color.Value == MassColor.Neu)      return true;
                 else     return false;
             }
@@ -116,35 +106,31 @@ namespace TresCoralMorris
             //先へ進めるかどうか
             bool CheckClick3(){
                 //movableを確認
+                if(_gameDate.CheckMovable(mass))    return true;
                 //もし、駄目ならCCボタンを光らせる
-                return true;
+                return false;
             }
+            #endregion
 
         }
 
         //移動先のマスを探す
         private void Phase22(){
+            Debug.Log("フェーズ21");
+            //石を入手
             var stone = _playerInput.GetStone.Value;
             
             //マスを入手
             var mass = _playerInput.GetMass.Value;
 
-            //ターンの判定
-            if(_turnColor.Value==PlayerColor.Black){
-                //準備
-                if(!CheckClick()) return;
-                if(!CheckClick2())return;
+            //準備
+            if(!CheckClick()) return;
+            if(!CheckClick2())return;
 
-                _afterMass = mass;
+            _afterMass = mass;
+            Phase++;
 
-                Phase++;
-                
-            }else if(_turnColor.Value==PlayerColor.White){
-
-            }
-
-            //ローカル関数
-
+            #region  確認用ローカル関数
             //クリックしたマスが移動可能なマスか確認
             //もし選んだマスのMovebaleの中に今選んだマスのidがあれば移動可能
             bool CheckClick(){
@@ -165,6 +151,7 @@ namespace TresCoralMorris
                 }
                 return false;
             }
+            #endregion
         }
 
 
@@ -174,17 +161,9 @@ namespace TresCoralMorris
             //移動
             _gameDate.SetStone(_turnColor.Value,_afterMass.ID, _selectedStone.ID.Value);
 
-            //ミルチェック
-            if(MillCheck()){
-                Debug.Log("ミル");
-                Phase = 36;
-            }else{
-                Phase=4;
-            }
-
-            bool MillCheck(){
-                return true;
-            }
+            //ミルならミルフェーズへ、無いならフェーズ4へ
+            if(_gameDate.MillCheck(_turnColor.Value,_afterMass))   Phase= 36;
+            else    Phase=4;
             
         }
 
@@ -206,13 +185,21 @@ namespace TresCoralMorris
         }
 
         private void Phase24(){
-            //色消滅処理
+            //白のターン終わりのみ発動
+            if(_turnColor.Value==PlayerColor.White){
+                //色消滅処理
 
-            //色完全消去ならゲーム終了
+                //色完全消去ならゲーム終了
+            } 
 
             //ターン変更
             turn.Value++;
             Phase = 1;
+        }
+
+        private MassColor GetMycolorofNowPlayer(){
+            if(_turnColor.Value==PlayerColor.Black)  return _gameDate.MyColorB.Value;
+            else    return _gameDate.MyColorW.Value;
         }
     }
 }

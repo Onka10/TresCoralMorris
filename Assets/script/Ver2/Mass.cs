@@ -21,6 +21,10 @@ namespace TresCoralMorris
             get{return _lane;}
         }
         [SerializeField] private int _lane;
+
+        public int Point {
+            get{return _point;}
+        }
         [SerializeField] private int _point;
 
         public IReadOnlyReactiveProperty<MassColor> Color => _color;
@@ -30,7 +34,7 @@ namespace TresCoralMorris
         
         public int[] MovebaleMass
         {
-            get { return MovebaleMass; }
+            get { return _movebaleMass; }
         }
         [SerializeField] private int[] _movebaleMass = new int[1];
 
@@ -44,7 +48,7 @@ namespace TresCoralMorris
         public void Init(int i){
             //idをセット
             _id = i;
-            Debug.Log(_id);
+            // Debug.Log(_id);
             //レーンをセット
             _lane = i/6;
             //ポイントをセット
@@ -52,6 +56,7 @@ namespace TresCoralMorris
             //移動可能マスを確認
             CheckMovablemass();
         }
+
         public void SetColor(MassColor color){
             _color.Value = color;
         }

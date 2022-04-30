@@ -13,6 +13,8 @@ namespace TresCoralMorris{
 
         public PlayerColor[] massinstone = new PlayerColor[24];
 
+        private Vector3 _millPosition;
+
         //フェーズ2以降
         public IReactiveProperty<MassColor> MyColorB  => _myColorB;
         private readonly ReactiveProperty<MassColor> _myColorB = new ReactiveProperty<MassColor>();
@@ -38,8 +40,17 @@ namespace TresCoralMorris{
                     massinstone[i] = PlayerColor.Empty;
             }
 
+            for(int i=0;i<7;i++){
+                //石の初期化
+                Bstone[i].GetComponent<Stone>().Init(i,PlayerColor.Black);
+                Wstone[i].GetComponent<Stone>().Init(i,PlayerColor.White);
+            }
+
             //色を決定
             InitColor();
+
+            //絶対よくないけどとりあえず初期化
+            _millPosition = new Vector3(0,0,0);
         }
 
 
@@ -104,7 +115,43 @@ namespace TresCoralMorris{
 
         //コマを消す
         public void DeleteStone(PlayerColor playerColor,int stoneid){
-            
+            if(playerColor == PlayerColor.Black){
+                Bstone[stoneid].GetComponent<Transform>().position = _millPosition;
+            }else if(playerColor == PlayerColor.White){
+                Wstone[stoneid].GetComponent<Transform>().position = _millPosition;
+            }
+        }
+
+        public bool CheckMovable(IMass mass){
+            return true;
+        }
+
+        //ミルチェック
+        public bool MillCheck(PlayerColor turnColor,IMass aftermass){
+
+            #region ミルの横判定
+            //配列の実際の値に変換
+            int point= 6 * aftermass.Lane;
+
+            //ミルの横の判定はmassのpointが０１２・２３４・４５０の時のみ
+            if(massinstone[point]==turnColor && massinstone[point+1]==turnColor && massinstone[point+2]==turnColor)    return true;
+            if(massinstone[point+2]==turnColor && massinstone[point+3]==turnColor && massinstone[point+4]==turnColor)    return true;
+            if(massinstone[point+4]==turnColor && massinstone[point+5]==turnColor && massinstone[point]==turnColor)    return true;
+            #endregion
+
+            #region ミルの縦判定
+            int lane= 6 * aftermass.Point;
+
+            //ミルの縦の判定はmassのLaneが012,123の時のみ
+            if(massinstone[lane]==turnColor && massinstone[lane+6]==turnColor && massinstone[lane+12]==turnColor)    return true;
+            if(massinstone[lane+6]==turnColor && massinstone[lane+12]==turnColor && massinstone[lane+18]==turnColor)    return true;
+            #endregion
+
+            return false;
+        }
+
+        public void CollateMovableColor(){
+            // if()
         }
     }
 }
