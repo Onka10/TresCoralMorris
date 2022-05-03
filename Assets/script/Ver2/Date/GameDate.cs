@@ -123,6 +123,7 @@ namespace TresCoralMorris{
         }
 
         public bool CheckMovable(IMass mass){
+            //
             return true;
         }
 
@@ -147,6 +148,30 @@ namespace TresCoralMorris{
             if(massinstone[lane+6]==turnColor && massinstone[lane+12]==turnColor && massinstone[lane+18]==turnColor)    return true;
             #endregion
 
+            return false;
+        }
+
+        //そのマスが、指定されたプレイヤーのmovableカラーに含まれているかを確認する
+        public bool CheckMobableColor(PlayerColor playerColor,IMass checkmass){
+
+            //movableカラーか中立ならセーフ
+            if(playerColor==PlayerColor.Black){
+                if(checkmass.Color.Value== MovebaleColorB1.Value || checkmass.Color.Value== MovebaleColorB2.Value)     return true;
+                if(checkmass.Color.Value==MassColor.Neu)         return true;
+            }else if(playerColor==PlayerColor.White){
+                if(checkmass.Color.Value== MovebaleColorW1.Value || checkmass.Color.Value== MovebaleColorW2.Value)     return true;
+                if(checkmass.Color.Value==MassColor.Neu)         return true;
+            }
+            return false;
+        }
+
+        public bool StoneCanMove(PlayerColor turncolor,IMass mass){
+            MassColor mycolor;
+
+            if(turncolor==PlayerColor.Black)  mycolor = MyColorB.Value;
+            else    mycolor= MyColorW.Value;
+
+            if(mass.Color.Value == mycolor || mass.Color.Value == MassColor.Neu)      return true;
             return false;
         }
 

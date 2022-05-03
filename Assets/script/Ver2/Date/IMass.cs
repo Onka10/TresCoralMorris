@@ -10,4 +10,5 @@ public interface IMass
 
     void Init(int i);
     void SetColor(MassColor color);
+    bool MobableCheck(int id);
 } 

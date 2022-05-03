@@ -8,35 +8,41 @@ namespace TresCoralMorris
 {
     public class Mass : MonoBehaviour,IMass
     {
+        #region プロパティ
+        //ID
         public int ID{
             get
             {
                 return _id;
             }
         }
-
         [SerializeField] private int _id;
 
+        //レーン
         public int Lane {
             get{return _lane;}
         }
         [SerializeField] private int _lane;
 
+        //ポイント
         public int Point {
             get{return _point;}
         }
         [SerializeField] private int _point;
 
+        //色
         public IReadOnlyReactiveProperty<MassColor> Color => _color;
         private readonly ReactiveProperty<MassColor> _color = new ReactiveProperty<MassColor>();
-
         [SerializeField] private MassColor SerializeColor;
         
+        //移動可能マス
         public int[] MovebaleMass
         {
             get { return _movebaleMass; }
         }
         [SerializeField] private int[] _movebaleMass = new int[1];
+
+        #endregion
 
 
         void Start(){
@@ -45,6 +51,8 @@ namespace TresCoralMorris
             .AddTo(this);
         }
 
+
+        //初期化変数
         public void Init(int i){
             //idをセット
             _id = i;
@@ -59,6 +67,15 @@ namespace TresCoralMorris
 
         public void SetColor(MassColor color){
             _color.Value = color;
+        }
+
+        //movableの中に指定されたマスが存在するかを確認する
+        public bool MobableCheck(int id){
+            for(int i=0;i< _movebaleMass.Length;i++){
+                if(_movebaleMass[i] == id)   return true;
+            }
+
+            return false;
         }
 
 

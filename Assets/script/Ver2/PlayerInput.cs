@@ -41,18 +41,18 @@ namespace TresCoralMorris
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                 foreach (RaycastHit hit in Physics.RaycastAll(ray)){
-                    Debug.Log("クリック");
+                    // Debug.Log("クリック");
                     if( hit.collider.gameObject.TryGetComponent<IMass>(out IMass mass) ){
                         //マスの入手
                         _masssubject.Value = mass;
-                        Debug.Log(mass);
+                        // Debug.Log(mass);
                         
                         click.OnNext(Unit.Default);
                     }else
                     if( hit.collider.gameObject.TryGetComponent<IStone>(out IStone stone) ){
                         //石の入手
                         _stoneSubject.Value = stone;
-                        Debug.Log(stone);
+                        // Debug.Log(stone);
 
                         click.OnNext(Unit.Default);
                     }

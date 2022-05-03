@@ -892,7 +892,7 @@ MonoBehaviour:
   END: 0
   _playerInput: {fileID: 65610493}
   _fhaseChangeManager: {fileID: 810343071}
-  _gameDate: {fileID: 0}
+  _gameDate: {fileID: 1629600485}
 --- !u!114 &284034792 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2524122508625962028, guid: 6b9b4cd57e91bf949a7397b45974327e, type: 3}
