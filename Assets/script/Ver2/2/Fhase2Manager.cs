@@ -13,6 +13,7 @@ namespace TresCoralMorris
         [SerializeField] PlayerInput _playerInput;
         [SerializeField] FhaseChangeManager _fhaseChangeManager;
         [SerializeField] TresCoralMorris.GameDate _gameDate;
+        [SerializeField] MassManager _massManager;
 
         // public IReactiveProperty<PlayerColor> TurnColor  => _turnColor;
         private readonly ReactiveProperty<PlayerColor> _turnColor = new ReactiveProperty<PlayerColor>();
@@ -21,11 +22,13 @@ namespace TresCoralMorris
 
 
         //UIが購読する
-        private readonly ReactiveProperty<int> BScore = new ReactiveProperty<int>();
-        private readonly ReactiveProperty<int> WScore = new ReactiveProperty<int>();
+        public IReactiveProperty<int> BScore  => _bPlayerScore;
+        private readonly ReactiveProperty<int> _bPlayerScore = new ReactiveProperty<int>();
+        public IReactiveProperty<int> WScore  => _wPlayerScore;
+        private readonly ReactiveProperty<int> _wPlayerScore = new ReactiveProperty<int>();
 
         //ターンとまとめるかも
-        private int Phase=1;
+        private int _phase=1;
 
         //クラス化するかも以下
         private int[] _milledStone = new int[3];
@@ -61,11 +64,11 @@ namespace TresCoralMorris
         }
 
         private void ExecuteOfTurn(){
-            if(Phase==1)        Phase21();
-            else if(Phase==2)   Phase22();
-            else if(Phase==3)   Phase23();
-            else if(Phase==36)  Phasemill();
-            else if(Phase==4)   Phase24();
+            if(_phase==1)        Phase21();
+            else if(_phase==2)   Phase22();
+            else if(_phase==3)   Phase23();
+            else if(_phase==36)  Phasemill();
+            else if(_phase==4)   Phase24();
         }
 
         private void Phase20(){
@@ -101,7 +104,7 @@ namespace TresCoralMorris
             Debug.Log("チェックを抜けました");
             _beforeMass = mass;
             _selectedStone = stone;
-            Phase++;
+            _phase++;
 
 
             #region 確認用ローカル変数
@@ -133,7 +136,7 @@ namespace TresCoralMorris
             if(!CheckClick2())return;
 
             _afterMass = mass;
-            Phase++;
+            _phase++;
 
             #region  確認用ローカル関数
             //クリックしたマスが移動可能なマスか確認
@@ -159,8 +162,8 @@ namespace TresCoralMorris
             _gameDate.SetStone(_turnColor.Value,_afterMass.ID, _selectedStone.ID.Value);
 
             //ミルならミルフェーズへ、無いならフェーズ4へ
-            if(_gameDate.MillCheck(_turnColor.Value,_afterMass))   Phase= 36;
-            else    Phase=4;
+            if(_gameDate.MillCheck(_turnColor.Value,_afterMass))   _phase= 36;
+            else    _phase=4;
             
         }
 
@@ -173,31 +176,36 @@ namespace TresCoralMorris
             //クリックされた石がmillされた石にあるかを探索する。存在しないなら-1が返ってくる
             int checkedMillStone = Array.IndexOf(_milledStone, stone.ID.Value);
 
-
             //ミルの対象で無いなら早期リターン
             if (-1 == checkedMillStone)   return;
 
             _gameDate.DeleteStone(_turnColor.Value,stone.ID.Value);
             
             //スコア加算
-            if(_turnColor.Value==PlayerColor.Black) BScore.Value++;
-            else if(_turnColor.Value==PlayerColor.White) WScore.Value++;
+            if(_turnColor.Value==PlayerColor.Black) _bPlayerScore.Value++;
+            else if(_turnColor.Value==PlayerColor.White) _wPlayerScore.Value++;
 
-            Phase=4;
+            _phase=4;
 
         }
 
         private void Phase24(){
             //白のターン終わりのみ発動
             if(_turnColor.Value==PlayerColor.White){
-                //色消滅処理
+                //チェック
+                var checkGrayMass  = _massManager.GetGrayMass();
 
-                //色完全消去ならゲーム終了
+                //trueなら処理実行
+                if(checkGrayMass.IsGrayMass)    _massManager.NeutralizationMassColor(checkGrayMass.GetRandomGrayMass());
+                else{
+                    //色完全消去ならゲーム終了
+                    END = true;
+                }
             } 
 
             //ターン変更
             turn.Value++;
-            Phase = 1;
+            _phase = 1;
         }
     }
 }

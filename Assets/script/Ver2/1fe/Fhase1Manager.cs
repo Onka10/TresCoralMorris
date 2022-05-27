@@ -24,6 +24,7 @@ namespace TresCoralMorris
 
         [SerializeField] PlayerInput _playerInput;
         [SerializeField] TresCoralMorris.GameDate _gameDate;
+        [SerializeField] MassManager _massManager;
 
         int _blackStoneNum=0;
         int _whiteStoneNum=0;
@@ -57,16 +58,16 @@ namespace TresCoralMorris
             //マスのidを入手
             int massID = _playerInput.GetMass.Value.ID;
             //マスの色を入手
-            var getmasscolor = _gameDate.mass[massID].GetComponent<IMass>().Color.Value;
+            var getMassColor = _massManager.GetMassColor(massID);
 
 
             //ターンの判定
             if(_turnColor.Value==PlayerColor.Black){
 
                 ////まだ置ける色があるか判定
-                if(BPlayerSetable[(int)getmasscolor]>0){
+                if(BPlayerSetable[(int)getMassColor]>0){
                     // Debug.Log(getmasscolor+"はまだおける");
-                    BPlayerSetable[(int)getmasscolor] -=1;
+                    BPlayerSetable[(int)getMassColor] -=1;
                 }else if(BPlayerSetable[0]==1){
                     // Debug.Log("any消費");
                     BPlayerSetable[0]=0;
@@ -81,9 +82,9 @@ namespace TresCoralMorris
             }else if(_turnColor.Value==PlayerColor.White){
 
                 ////まだ置ける色があるか判定
-                if(WPlayerSetable[(int)getmasscolor]>0){
+                if(WPlayerSetable[(int)getMassColor]>0){
                     // Debug.Log(getmasscolor+"はまだおける");
-                    WPlayerSetable[(int)getmasscolor] -=1;
+                    WPlayerSetable[(int)getMassColor] -=1;
                 }else if(WPlayerSetable[0]==1){
                     // Debug.Log("any消費");
                     WPlayerSetable[0]=0;

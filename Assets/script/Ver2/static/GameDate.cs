@@ -33,13 +33,6 @@ namespace TresCoralMorris{
 
         public void InitGameDate(){
 
-            for(int i=0;i<24;i++){
-                //マスの初期化
-                    imass[i].Init(i);
-                    //おいている石を空に
-                    massinstone[i] = PlayerColor.Empty;
-            }
-
             for(int i=0;i<7;i++){
                 //石の初期化
                 Bstone[i].GetComponent<Stone>().Init(i,PlayerColor.Black);
@@ -47,39 +40,39 @@ namespace TresCoralMorris{
             }
 
             //色を決定
-            InitColor();
+            // InitColor();
 
             //絶対よくないけどとりあえず初期化
             _millPosition = new Vector3(0,0,0);
         }
 
 
-        private void InitColor(){
+        // private void InitColor(){
 
-            //色の初期化の処理で使う
-            int[] counter = new int[3];
+        //     //色の初期化の処理で使う
+        //     int[] counter = new int[3];
 
-            for(int index=0;index<24;index++){
-                int colorNum = Random.Range(0,3);
-                while(counter[colorNum]== 8){
-                    colorNum=(colorNum+1)%3;
-                }
-                counter[colorNum]++;
+        //     for(int index=0;index<24;index++){
+        //         int colorNum = Random.Range(0,3);
+        //         while(counter[colorNum]== 8){
+        //             colorNum=(colorNum+1)%3;
+        //         }
+        //         counter[colorNum]++;
 
 
-                switch(colorNum) {
-                    case 0:
-                        mass[index].GetComponent<IMass>().SetColor(MassColor.Red);
-                        break;
-                    case 1:
-                        mass[index].GetComponent<IMass>().SetColor(MassColor.Green);
-                        break;
-                    case 2:
-                        mass[index].GetComponent<IMass>().SetColor(MassColor.Blue);
-                        break;
-                }
-            }
-        }
+        //         switch(colorNum) {
+        //             case 0:
+        //                 mass[index].GetComponent<IMass>().SetColor(MassColor.Red);
+        //                 break;
+        //             case 1:
+        //                 mass[index].GetComponent<IMass>().SetColor(MassColor.Green);
+        //                 break;
+        //             case 2:
+        //                 mass[index].GetComponent<IMass>().SetColor(MassColor.Blue);
+        //                 break;
+        //         }
+        //     }
+        // }
 
         public void SetStone(PlayerColor playerColor,int massid, int stoneid){
             //データ
