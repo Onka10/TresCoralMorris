@@ -8,12 +8,14 @@ namespace TresCoralMorris
 {
     public class Fhase2Manager : MonoBehaviour
     {
-        public bool END=false;
-
         [SerializeField] PlayerInput _playerInput;
         [SerializeField] FhaseChangeManager _fhaseChangeManager;
         [SerializeField] TresCoralMorris.GameDate _gameDate;
+        [SerializeField] StoneInMass _stoneInMass;
         [SerializeField] MassManager _massManager;
+
+        public IObservable<Unit> OnReloadView => _reload;
+        private readonly Subject<Unit> _reload = new Subject<Unit>();
 
         // public IReactiveProperty<PlayerColor> TurnColor  => _turnColor;
         private readonly ReactiveProperty<PlayerColor> _turnColor = new ReactiveProperty<PlayerColor>();
@@ -39,7 +41,8 @@ namespace TresCoralMorris
 
         void Start()
         {
-            _fhaseChangeManager.Next
+            GameManager.I.Phase
+            .Where(t => t == GamePhase.Phase2)
             .Subscribe(_ => Init())
             .AddTo(this);
         }
@@ -50,7 +53,6 @@ namespace TresCoralMorris
             _playerInput.Click
             .Subscribe(_ => ExecuteOfTurn())
             .AddTo(this);
-
 
             //ターンの変更
             turn
@@ -159,7 +161,8 @@ namespace TresCoralMorris
         //石を移動して、ミルチェックを行う
         private void Phase23(){
             //移動
-            _gameDate.SetStone(_turnColor.Value,_afterMass.ID, _selectedStone.ID.Value);
+            //FIXME
+            // _gameDate.SetStone(_turnColor.Value,_afterMass.ID, _selectedStone.ID.Value);
 
             //ミルならミルフェーズへ、無いならフェーズ4へ
             if(_gameDate.MillCheck(_turnColor.Value,_afterMass))   _phase= 36;
@@ -172,6 +175,8 @@ namespace TresCoralMorris
         private void Phasemill(){
             //石を入手
             var stone = _playerInput.GetStone.Value;
+            //マスを入手
+            var mass = _playerInput.GetMass.Value.ID;
 
             //クリックされた石がmillされた石にあるかを探索する。存在しないなら-1が返ってくる
             int checkedMillStone = Array.IndexOf(_milledStone, stone.ID.Value);
@@ -179,7 +184,7 @@ namespace TresCoralMorris
             //ミルの対象で無いなら早期リターン
             if (-1 == checkedMillStone)   return;
 
-            _gameDate.DeleteStone(_turnColor.Value,stone.ID.Value);
+            _stoneInMass.DeleteStone(_turnColor.Value,stone.ID.Value,mass);
             
             //スコア加算
             if(_turnColor.Value==PlayerColor.Black) _bPlayerScore.Value++;
@@ -199,7 +204,7 @@ namespace TresCoralMorris
                 if(checkGrayMass.IsGrayMass)    _massManager.NeutralizationMassColor(checkGrayMass.GetRandomGrayMass());
                 else{
                     //色完全消去ならゲーム終了
-                    END = true;
+                    GameManager.I.EndPhase();
                 }
             } 
 

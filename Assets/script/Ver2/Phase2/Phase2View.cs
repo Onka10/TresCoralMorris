@@ -9,7 +9,7 @@ namespace TresCoralMorris.UI{
 public class Phase2View : MonoBehaviour
 {
     [SerializeField] Fhase2Manager _p2Manager;
-    [SerializeField] GameObject UIPart;
+    [SerializeField] GameObject UI;
 
     //変更する対象のUI
     public Image[] BUIColor = new Image[4];
@@ -22,15 +22,19 @@ public class Phase2View : MonoBehaviour
     void Start()
     {
         GameManager.I.Phase
-        .Where(p => p==GamePhase.Phase2)
+        .Where(p => p ==GamePhase.Phase2)
         .Subscribe(_ => Init())
         .AddTo(this);
 
     }
 
     private void Init(){
+        _p2Manager.OnReloadView
+        .Subscribe(_ => Debug.Log("ぬぇ"))
+        .AddTo(this);
+
         //UIを表示
-        UIPart.SetActive(true);
+        UI.SetActive(true);
 
         //TODOUIを初期化と購読
         // ChangeMycolorB();

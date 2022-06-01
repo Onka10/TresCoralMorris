@@ -11,19 +11,16 @@ namespace TresCoralMorris
     {
         // UIがまだ
 
-
-        public bool END=false;
-
         public IReactiveProperty<PlayerColor> TurnColor  => _turnColor;
         private readonly ReactiveProperty<PlayerColor> _turnColor = new ReactiveProperty<PlayerColor>();
 
-        public IObservable<Unit> Next => _next;
-        private Subject<Unit> _next = new Subject<Unit>();
+        public IObservable<Unit> OnReloadView => _reload;
+        private readonly Subject<Unit> _reload = new Subject<Unit>();
 
-        private readonly ReactiveProperty<int> turn = new ReactiveProperty<int>();
+        private readonly ReactiveProperty<int> _turn = new ReactiveProperty<int>(0);
 
         [SerializeField] PlayerInput _playerInput;
-        [SerializeField] TresCoralMorris.GameDate _gameDate;
+        [SerializeField] StoneInMass _stoneInMass;
         [SerializeField] MassManager _massManager;
 
         int _blackStoneNum=0;
@@ -34,35 +31,45 @@ namespace TresCoralMorris
         public IReactiveCollection<int> WSetable => WPlayerSetable;
         private readonly ReactiveCollection<int> WPlayerSetable = new ReactiveCollection<int>(){ 1, 2, 2, 2};
 
+
         void Start()
         {
+            GameManager.I.Phase
+            .Where(t => t == GamePhase.Phase1)
+            .Subscribe(_ => Init())
+            .AddTo(this);
+        }
+
+        void Init()
+        {
             //終了
-            turn
+            _turn
             .Where(x => x == 14)
-            .Subscribe(_ => NextFhase())
+            .Subscribe(_ => NextPhase())
             .AddTo(this);
 
             //ターンの変更
-            turn
-            .Subscribe(_ => Change_turnColor())
+            _turn
+            .Subscribe(_ => Turn.I.TurnChange())
             .AddTo(this);
 
             //inputをうけとる
             _playerInput.Click
-            .Where(_ => _gameDate.massinstone[_playerInput.GetMass.Value.ID] == PlayerColor.Empty)
-            .Subscribe(_ => ExsecuteOfTurn())
+            .Where(_ => !_stoneInMass.IsInStone(_playerInput.GetMass.Value.ID))
+            .Subscribe(_ => ExecuteOfTurn())
             .AddTo(this);
         }
 
-        private void ExsecuteOfTurn(){
+        private void ExecuteOfTurn(){
             //マスのidを入手
             int massID = _playerInput.GetMass.Value.ID;
             //マスの色を入手
-            var getMassColor = _massManager.GetMassColor(massID);
+            var getMassColor = _playerInput.GetMass.Value.Color.Value;
 
+            var turn = Turn.I.TurnColor.Value;
 
             //ターンの判定
-            if(_turnColor.Value==PlayerColor.Black){
+            if(turn==PlayerColor.Black){
 
                 ////まだ置ける色があるか判定
                 if(BPlayerSetable[(int)getMassColor]>0){
@@ -76,10 +83,11 @@ namespace TresCoralMorris
                 }
 
                 //石をおく
-                _gameDate.SetStone(PlayerColor.Black, massID,_blackStoneNum);
+                _stoneInMass.SetStone(PlayerColor.Black, massID,_blackStoneNum);
                 _blackStoneNum++;
-                turn.Value++;
-            }else if(_turnColor.Value==PlayerColor.White){
+                
+                _turn.Value++;
+            }else if(turn==PlayerColor.White){
 
                 ////まだ置ける色があるか判定
                 if(WPlayerSetable[(int)getMassColor]>0){
@@ -93,21 +101,15 @@ namespace TresCoralMorris
                 }
 
                 //石をおく
-                _gameDate.SetStone(PlayerColor.White, massID,_whiteStoneNum);
+                _stoneInMass.SetStone(PlayerColor.White, massID,_whiteStoneNum);
                 _whiteStoneNum++;
-                turn.Value++;
+                _turn.Value++;
             }
         }
 
-        private void Change_turnColor(){
-            _turnColor.Value = turn.Value % 2==0 ? PlayerColor.Black:PlayerColor.White;
-            // Debug.Log("今は"+_turnColor);
-        }
+        private void NextPhase(){
+            GameManager.I.EndPhase();
 
-        private void NextFhase(){
-            _next.OnNext(Unit.Default);
-
-            END = true;
             //ストリームを終了
             Destroy(this.gameObject);
         }

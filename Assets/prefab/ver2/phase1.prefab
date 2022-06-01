@@ -624,6 +624,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 809590995133751688}
+  - component: {fileID: 6769342947227230236}
   m_Layer: 5
   m_Name: phase1
   m_TagString: Untagged
@@ -652,6 +653,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6769342947227230236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809590995133751689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7cbb000c9819e7439d3d4b1824d5c49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fhase1Manager: {fileID: 0}
+  _playerBCosts:
+  - {fileID: 4116657353353039832}
+  - {fileID: 7918629435703899317}
+  - {fileID: 8988623609843539619}
+  - {fileID: 7285816435074286896}
+  _playerWCosts:
+  - {fileID: 2023203886178939326}
+  - {fileID: 2524122508625962028}
+  - {fileID: 2758746187687674974}
+  - {fileID: 844508152050228741}
 --- !u!1 &914148049177204774
 GameObject:
   m_ObjectHideFlags: 0

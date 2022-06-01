@@ -4,30 +4,21 @@ using UnityEngine;
 using UniRx;
 
 
-namespace TresCoralMorris
+namespace TresCoralMorris.MassData
 {
     public class Mass : MonoBehaviour,IMass
     {
         #region プロパティ
         //ID
-        public int ID{
-            get
-            {
-                return _id;
-            }
-        }
+        public int ID => _id;
         [SerializeField] private int _id;
 
         //レーン
-        public int Lane {
-            get{return _lane;}
-        }
+        public int Lane => _lane;
         [SerializeField] private int _lane;
 
         //ポイント
-        public int Point {
-            get{return _point;}
-        }
+        public int Point => _point;
         [SerializeField] private int _point;
 
         //色
@@ -36,12 +27,8 @@ namespace TresCoralMorris
         [SerializeField] private MassColor SerializeColor;
         
         //移動可能マス
-        public int[] MovebaleMass
-        {
-            get { return _movebaleMass; }
-        }
+        public int[] MovebaleMass => _movebaleMass;
         [SerializeField] private int[] _movebaleMass = new int[1];
-
         #endregion
 
 
@@ -62,7 +49,25 @@ namespace TresCoralMorris
             //ポイントをセット
             _point = i % 6;
             //移動可能マスを確認
-            CheckMovablemass();
+            SetMovablemass();
+
+            void SetMovablemass(){
+                int id=_id;
+                Queue<int> queue = new Queue <int>();
+
+                //_laneが端でないなら隣の列にいける
+                if(_lane!=0)    queue.Enqueue(id-6);
+                if(_lane!=3)    queue.Enqueue(id+6);
+
+                //マスのポイントが端でないなら横に移動出来る
+                if(_point!=0)   queue.Enqueue(id-1);
+                else            queue.Enqueue(id+5);
+
+                if(_point!=5)   queue.Enqueue(id+1);
+                else            queue.Enqueue(id-5);
+
+                _movebaleMass = queue.ToArray();
+            }
         }
 
         public void SetColor(MassColor color){
@@ -77,26 +82,6 @@ namespace TresCoralMorris
 
             return false;
         }
-
-
-        #region  privateのメソッド
-        private void CheckMovablemass(){
-            //数バグってます
-
-            int id=_id;
-            Queue<int> queue = new Queue <int>();
-            //_laneが端でないなら隣の列にいける
-            if(_lane!=0)    queue.Enqueue(id-6);
-            if(_lane!=3)    queue.Enqueue(id+6);
-            //マスのポイントが端でないなら横に移動出来る
-            if(_point!=0)   queue.Enqueue(id--);
-            else            queue.Enqueue(id+5);
-            if(_point!=5)   queue.Enqueue(id++);
-            else            queue.Enqueue(id-5);
-            _movebaleMass = queue.ToArray();
-        }
-
-        #endregion
     }
 
 }

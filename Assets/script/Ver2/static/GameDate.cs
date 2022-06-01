@@ -7,7 +7,6 @@ namespace TresCoralMorris{
     public class GameDate : MonoBehaviour
     {
         public GameObject[] mass = new GameObject[24];
-        public Mass[] imass = new Mass[24];
         public GameObject[] Bstone = new GameObject[7];
         public GameObject[] Wstone = new GameObject[7];
 
@@ -30,15 +29,13 @@ namespace TresCoralMorris{
         public IReactiveProperty<MassColor> MovebaleColorW2  => _moveW2;
         private readonly ReactiveProperty<MassColor> _moveW2 = new ReactiveProperty<MassColor>();
 
+        void start(){
+            // GameManager.I.Phase
+            // .Subscribe(_ => InitGameDate())
+            // .AddTo(this);
+        }
 
-        public void InitGameDate(){
-
-            for(int i=0;i<7;i++){
-                //石の初期化
-                Bstone[i].GetComponent<Stone>().Init(i,PlayerColor.Black);
-                Wstone[i].GetComponent<Stone>().Init(i,PlayerColor.White);
-            }
-
+        void InitGameDate(){
             //色を決定
             // InitColor();
 
@@ -74,51 +71,43 @@ namespace TresCoralMorris{
         //     }
         // }
 
-        public void SetStone(PlayerColor playerColor,int massid, int stoneid){
-            //データ
-            massinstone[massid] = playerColor;
+        // public void SetStone(PlayerColor playerColor,int massid, int stoneid){
+        //     //データ
+        //     massinstone[massid] = playerColor;
 
-            //見た目
-            Vector3 movedpotion = mass[massid].GetComponent<Transform>().position;
-            movedpotion.y = 1.4f;
+        //     //見た目
+        //     Vector3 movedpotion = mass[massid].GetComponent<Transform>().position;
+        //     movedpotion.y = 1.4f;
 
-            if(playerColor == PlayerColor.Black){
-                Bstone[stoneid].GetComponent<Transform>().position = movedpotion;
-            }else if(playerColor == PlayerColor.White){
-                Wstone[stoneid].GetComponent<Transform>().position = movedpotion;
-            }
-        }
+        //     if(playerColor == PlayerColor.Black){
+        //         Bstone[stoneid].GetComponent<Transform>().position = movedpotion;
+        //     }else if(playerColor == PlayerColor.White){
+        //         Wstone[stoneid].GetComponent<Transform>().position = movedpotion;
+        //     }
+        // }
 
         //フェーズ2の交換がある場合のオーバーロード
         public void SetStone(PlayerColor playerColor,int beforeMassid,int afterMassid, int stoneid){
-            //データ
-            massinstone[beforeMassid] = PlayerColor.Empty;
-            massinstone[afterMassid] = playerColor;
+            //FIXME
+            // //データ
+            // massinstone[beforeMassid] = PlayerColor.Empty;
+            // massinstone[afterMassid] = playerColor;
 
-            //見た目
-            Vector3 movedpotion = mass[afterMassid].GetComponent<Transform>().position;
-            movedpotion.y = 1.4f;
+            // //見た目
+            // Vector3 movedpotion = mass[afterMassid].GetComponent<Transform>().position;
+            // movedpotion.y = 1.4f;
 
-            if(playerColor == PlayerColor.Black){
-                Bstone[stoneid].GetComponent<Transform>().position = movedpotion;
-            }else if(playerColor == PlayerColor.White){
-                Wstone[stoneid].GetComponent<Transform>().position = movedpotion;
-            }
+            // if(playerColor == PlayerColor.Black){
+            //     Bstone[stoneid].GetComponent<Transform>().position = movedpotion;
+            // }else if(playerColor == PlayerColor.White){
+            //     Wstone[stoneid].GetComponent<Transform>().position = movedpotion;
+            // }
         }
 
-        //コマを消す
-        public void DeleteStone(PlayerColor playerColor,int stoneid){
-            if(playerColor == PlayerColor.Black){
-                Bstone[stoneid].GetComponent<Transform>().position = _millPosition;
-            }else if(playerColor == PlayerColor.White){
-                Wstone[stoneid].GetComponent<Transform>().position = _millPosition;
-            }
-        }
-
-        public bool CheckMovable(IMass mass){
-            //
-            return true;
-        }
+        // public bool CheckMovable(IMass mass){
+        //     //
+        //     return true;
+        // }
 
         //ミルチェック
         public bool MillCheck(PlayerColor turnColor,IMass aftermass){
@@ -157,6 +146,17 @@ namespace TresCoralMorris{
             }
             return false;
         }
+
+        // /// <summary>
+        // /// MassのView
+        // /// </summary>
+        // public void DeleteStone(PlayerColor playerColor,int stoneid){
+        //     if(playerColor == PlayerColor.Black){
+        //         Bstone[stoneid].GetComponent<Transform>().position = _millPosition;
+        //     }else if(playerColor == PlayerColor.White){
+        //         Wstone[stoneid].GetComponent<Transform>().position = _millPosition;
+        //     }
+        // }
 
         public bool StoneCanMove(PlayerColor turncolor,IMass mass){
             MassColor mycolor;

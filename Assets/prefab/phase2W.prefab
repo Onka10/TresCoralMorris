@@ -1146,7 +1146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _p2Manager: {fileID: 0}
-  UIPart: {fileID: 8778364028945825131}
+  UI: {fileID: 8778364028945825131}
   BUIColor:
   - {fileID: 809590993591141439}
   - {fileID: 8761614442564050087}

@@ -3,24 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using DG.Tweening;
+using TresCoralMorris.MassData;
 
 namespace TresCoralMorris{
+    /// <summary>
+    /// マス全体に何かする時、データの入力処理とViewのクラス
+    /// </summary>
     public class MassManager : MonoBehaviour
     {
         public GameObject massParent;
 
-        private IMass[] mass = new IMass[24];
+        private Mass[] mass = new Mass[24];
         private MeshRenderer[] massRenderer = new MeshRenderer[24];
 
         private void Start(){
             //キャッシュ
             for(int i=0 ;i<mass.Length;i++){
-                mass[i] = massParent.transform.GetChild(i).gameObject.GetComponent<IMass>();
+                mass[i] = massParent.transform.GetChild(i).gameObject.GetComponent<Mass>();
                 massRenderer[i] = massParent.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>();
             }
+
+            GameManager.I.Phase
+            .Where(t => t==GamePhase.Ready)
+            .Subscribe(_ => Init())
+            .AddTo(this);
         }
 
-        public void InitColor(){
+        public void Init(){
+            //data
+            for(int i=0;i<mass.Length;i++){
+                mass[i].Init(i);
+            }
+
+            //color
             int[] counter = new int[3];
 
             for(int index=0;index<massRenderer.Length;index++){
@@ -36,21 +51,11 @@ namespace TresCoralMorris{
                 mass[index].SetColor(massColor);
                 SetColorMesh(index);
             }
+
+            GameManager.I.EndPhase();
         }
 
-        public void InitData(){
-            for(int i=0;i<mass.Length;i++){
-                mass[i].Init(i);
-            }
-        }
 
-        /// <summary>
-        /// 指定したidのマスのMassColorを入手
-        /// </summary>
-        public MassColor GetMassColor(int id){
-            return mass[id].Color.Value;
-        }
-        
         /// <summary>
         /// 指定したidのマスを中立化
         /// </summary>
