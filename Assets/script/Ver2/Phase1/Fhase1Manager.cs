@@ -50,6 +50,7 @@ namespace TresCoralMorris
 
             //ターンの変更
             _turn
+            .SkipLatestValueOnSubscribe()
             .Subscribe(_ => Turn.I.TurnChange())
             .AddTo(this);
 

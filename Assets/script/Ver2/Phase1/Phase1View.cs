@@ -24,19 +24,19 @@ namespace TresCoralMorris.Phase1.UI{
             .AddTo(this);
 
 
-            GameManager.I.Phase
-            .Where(p => p ==GamePhase.MidPhase)
-            // .Subscribe(_ => Destroy(this.gameObject))
-            .Subscribe(_ => Debug.Log("test"))
-            .AddTo(this);
+            // GameManager.I.Phase
+            // .Where(p => p ==GamePhase.MidPhase)
+            // // .Subscribe(_ => Destroy(this.gameObject))
+            // .Subscribe(_ => Debug.Log("test"))
+            // .AddTo(this);
         }
 
         private void OnReplace(CollectionReplaceEvent<int> replaceEvent) {
             // Debug.Log($"{replaceEvent.Index}番目の値が{replaceEvent.OldValue}→{replaceEvent.NewValue}に変更");
 
-            if(_fhase1Manager.TurnColor.Value==PlayerColor.Black){
+            if(Turn.I.TurnColor.Value==PlayerColor.Black){
                 _playerBCosts[replaceEvent.Index].text = replaceEvent.NewValue.ToString();
-            }else if(_fhase1Manager.TurnColor.Value==PlayerColor.White){
+            }else if(Turn.I.TurnColor.Value==PlayerColor.White){
                 _playerWCosts[replaceEvent.Index].text = replaceEvent.NewValue.ToString();
             }
 
