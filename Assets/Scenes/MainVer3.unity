@@ -1093,8 +1093,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 65610493}
   _gameDate: {fileID: 1629600485}
-  _stoneInMass: {fileID: 0}
-  _massManager: {fileID: 0}
+  _stoneInMass: {fileID: 1387145927}
+  _massManager: {fileID: 1052635672}
 --- !u!1001 &287039503
 PrefabInstance:
   m_ObjectHideFlags: 0
