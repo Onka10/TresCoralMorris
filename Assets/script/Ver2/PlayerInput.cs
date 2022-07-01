@@ -52,7 +52,7 @@ namespace TresCoralMorris
                     if( hit.collider.gameObject.TryGetComponent<IStone>(out IStone stone) ){
                         //石の入手
                         _stoneSubject.Value = stone;
-                        // Debug.Log(stone);
+                        Debug.Log(stone);
 
                         click.OnNext(Unit.Default);
                     }

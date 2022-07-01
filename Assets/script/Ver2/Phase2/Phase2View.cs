@@ -30,7 +30,10 @@ public class Phase2View : MonoBehaviour
 
     private void Init(){
         _p2Manager.OnReloadView
-        .Subscribe(_ => Debug.Log("ぬぇ"))
+        .Subscribe(_ =>{
+            ChangeMycolorB(MyColorManager.I.BPlayerMyColors);
+            ChangeMycolorW(MyColorManager.I.WPlayerMyColors);
+        })
         .AddTo(this);
 
         //UIを表示

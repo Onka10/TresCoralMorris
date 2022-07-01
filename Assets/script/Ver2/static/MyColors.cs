@@ -1,5 +1,5 @@
 
-public abstract class MyColors
+public class MyColors
 {
     //コンストラクタ
     public MyColors(MassColor mycolor,MassColor move1,MassColor move2){

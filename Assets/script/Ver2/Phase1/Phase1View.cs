@@ -24,11 +24,10 @@ namespace TresCoralMorris.Phase1.UI{
             .AddTo(this);
 
 
-            // GameManager.I.Phase
-            // .Where(p => p ==GamePhase.MidPhase)
-            // // .Subscribe(_ => Destroy(this.gameObject))
-            // .Subscribe(_ => Debug.Log("test"))
-            // .AddTo(this);
+            GameManager.I.Phase
+            .Where(p => p ==GamePhase.MidPhase)
+            .Subscribe(_ => Destroy(this.gameObject))
+            .AddTo(this);
         }
 
         private void OnReplace(CollectionReplaceEvent<int> replaceEvent) {

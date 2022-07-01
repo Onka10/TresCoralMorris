@@ -36,7 +36,9 @@ namespace TresCoralMorris
         {
             GameManager.I.Phase
             .Where(t => t == GamePhase.Phase1)
-            .Subscribe(_ => Init())
+            .Subscribe(_ => {
+                Init();
+            })
             .AddTo(this);
         }
 
@@ -59,6 +61,8 @@ namespace TresCoralMorris
             .Where(_ => !_stoneInMass.IsInStone(_playerInput.GetMass.Value.ID))
             .Subscribe(_ => ExecuteOfTurn())
             .AddTo(this);
+
+            
         }
 
         private void ExecuteOfTurn(){

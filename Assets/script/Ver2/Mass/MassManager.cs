@@ -51,8 +51,6 @@ namespace TresCoralMorris{
                 mass[index].SetColor(massColor);
                 SetColorMesh(index);
             }
-
-            GameManager.I.EndPhase();
         }
 
 
@@ -90,6 +88,18 @@ namespace TresCoralMorris{
 
             //みための変更
             massRenderer[id].material.DOColor(color,2f);
+        }
+
+        public bool CheckMassCanMove(IMass mass){
+            PlayerColor playerColor = Turn.I.TurnColor.Value;
+            
+            MassColor massColor;
+            if(playerColor == PlayerColor.Black)  massColor = MyColorManager.I.BPlayerMyColors.MyColor;
+            else massColor = MyColorManager.I.WPlayerMyColors.MyColor;
+            
+
+            if(mass.Color.Value ==  massColor|| mass.Color.Value == MassColor.Neu)      return true;
+            return false;
         }
     }
 }

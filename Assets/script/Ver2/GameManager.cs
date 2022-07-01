@@ -9,11 +9,10 @@ namespace TresCoralMorris{
     public class GameManager : Singleton<GameManager>
     {
         public IReactiveProperty<GamePhase> Phase  => _phase;
-        private readonly ReactiveProperty<GamePhase> _phase = new ReactiveProperty<GamePhase>();
+        private readonly ReactiveProperty<GamePhase> _phase = new ReactiveProperty<GamePhase>(GamePhase.Ready);
 
         void Start()
         {
-            _phase.Value = GamePhase.Ready;
             InitGame().Forget();
         }
 
@@ -29,18 +28,18 @@ namespace TresCoralMorris{
             //フェーズ1
             Debug.Log("フェーズ1");
             _phase.Value = GamePhase.Phase1;
-            // await UniTask.WaitUntil(() => _phase.Value == GamePhase.MidPhase);
+            await UniTask.WaitUntil(() => _phase.Value == GamePhase.MidPhase);
             
             //フェーズ1.5
             Debug.Log("1.5スタート");
-            // await UniTask.WaitUntil(() => _phase.Value == GamePhase.Phase2);
+            await UniTask.WaitUntil(() => _phase.Value == GamePhase.Phase2);
             
             //フェーズ２
             Debug.Log("2スタート");
         }
 
         public void EndPhase(){
-             _phase.Value = _phase.Value++;
+            _phase.Value++;
         }
 
         public void EndGame(){

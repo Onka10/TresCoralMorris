@@ -9,7 +9,6 @@ namespace TresCoralMorris
     public class Fhase2Manager : MonoBehaviour
     {
         [SerializeField] PlayerInput _playerInput;
-        [SerializeField] FhaseChangeManager _fhaseChangeManager;
         [SerializeField] TresCoralMorris.GameDate _gameDate;
         [SerializeField] StoneInMass _stoneInMass;
         [SerializeField] MassManager _massManager;
@@ -58,6 +57,8 @@ namespace TresCoralMorris
             turn
             .Subscribe(_ => Change_turnColor())
             .AddTo(this);
+
+            _reload.OnNext(Unit.Default);
         }
 
         private void Change_turnColor(){
@@ -93,17 +94,18 @@ namespace TresCoralMorris
             Debug.Log("フェーズ2");
             //石を入手
             var stone = _playerInput.GetStone.Value;
+            // Debug.Log(stone);
             
             //マスを入手
             var mass = _playerInput.GetMass.Value;
 
-            
             //駄目な選択のチェック
             if(!CheckClick()) return;
             if(!CheckClick2())return;
 
             //チェックが大丈夫なら次のフェーズへ
             Debug.Log("チェックを抜けました");
+            //TODOコマ選択中エフェクト再生
             _beforeMass = mass;
             _selectedStone = stone;
             _phase++;
@@ -118,7 +120,7 @@ namespace TresCoralMorris
 
             //クリックしたマスがマイカラーと同じ&&マスがグレー
             bool CheckClick2(){
-                if(_gameDate.StoneCanMove(_turnColor.Value,mass))    return true;
+                if(_massManager.CheckMassCanMove(mass))    return true;
                 else return false;
             }
             #endregion
