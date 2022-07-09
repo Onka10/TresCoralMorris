@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5538808630677195474}
   - component: {fileID: 8895197020808988023}
   - component: {fileID: 6671768139094438333}
+  - component: {fileID: 146402122933380345}
+  - component: {fileID: 6185004672224908636}
   m_Layer: 0
   m_Name: BlackPiece
   m_TagString: Untagged
@@ -82,3 +84,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &146402122933380345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5158343091070013544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &6185004672224908636
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5158343091070013544}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.010647097, y: 0.016172502, z: 0.023724694}
+  m_Center: {x: -0.000000007450581, y: 0.0018953937, z: 0.011862343}

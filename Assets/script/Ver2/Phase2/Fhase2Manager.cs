@@ -72,6 +72,8 @@ namespace TresCoralMorris
             else if(_phase==3)   Phase23();
             else if(_phase==36)  Phasemill();
             else if(_phase==4)   Phase24();
+
+            debug_p2log.I.DebugLogPhase(_phase);
         }
 
         private void Phase20(){
@@ -91,7 +93,7 @@ namespace TresCoralMorris
 
         //動かす石を決める
         private void Phase21(){
-            Debug.Log("フェーズ2");
+            // Debug.Log("フェーズ2");
             //石を入手
             var stone = _playerInput.GetStone.Value;
             // Debug.Log(stone);
@@ -108,12 +110,16 @@ namespace TresCoralMorris
             //TODOコマ選択中エフェクト再生
             _beforeMass = mass;
             _selectedStone = stone;
+            // EffectManager.I.PlayEffect();
+            debug_p2log.I.DebugLogObj<IStone>(stone);
             _phase++;
 
 
             #region 確認用ローカル変数
             //クリックした石がプレイヤー色か確認
             bool CheckClick(){
+                // Debug.Log(stone);
+                // Debug.Log(_turnColor.Value);
                 if(stone.Color.Value == _turnColor.Value)   return true;
                 else    return false;
             }
@@ -147,12 +153,15 @@ namespace TresCoralMorris
             //もし選んだマスのMovebaleの中に今選んだマスのidがあれば移動可能
             bool CheckClick(){
                 if(_beforeMass.MobableCheck(mass.ID)) return true;
+                
+                Debug.Log("Movableなますではありません");
                 return false;
             }
 
             //クリックしたマスが移動可能な色か確認
             bool CheckClick2(){
                 if( _gameDate.CheckMobableColor(_turnColor.Value,mass)) return true;
+                Debug.Log("移動可能なますではありません");
                 return false;
             }
             #endregion

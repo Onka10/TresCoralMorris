@@ -40,25 +40,41 @@ namespace TresCoralMorris
                 
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+                //FIXMEすごく汚い
                 foreach (RaycastHit hit in Physics.RaycastAll(ray)){
-                    // Debug.Log("クリック");
-                    if( hit.collider.gameObject.TryGetComponent<IMass>(out IMass mass) ){
-                        //マスの入手
-                        _masssubject.Value = mass;
-                        // Debug.Log(mass);
-                        
-                        click.OnNext(Unit.Default);
-                    }else
-                    if( hit.collider.gameObject.TryGetComponent<IStone>(out IStone stone) ){
-                        //石の入手
-                        _stoneSubject.Value = stone;
-                        Debug.Log(stone);
+                    //フェーズ1
+                    if(GameManager.I.Phase.Value == GamePhase.Phase1){
+                        if( hit.collider.gameObject.TryGetComponent<IMass>(out IMass mass) ){
+                            //マスの入手
+                            _masssubject.Value = mass;
+                            // Debug.Log(mass);
+                            
+                            click.OnNext(Unit.Default);
+                        }
+                    }
 
+
+                    if(GameManager.I.Phase.Value == GamePhase.Phase2){
+                        Debug.Log(hit.collider.gameObject);
+
+                        if( hit.collider.gameObject.TryGetComponent<IStone>(out IStone stone) ){
+                            Debug.Log("きてます");
+                            //石の入手
+                            _stoneSubject.Value = stone;
+                            Debug.Log(stone);
+                        }else
+                        if( hit.collider.gameObject.TryGetComponent<IMass>(out IMass mass) ){
+                            Debug.Log("きてます2");
+                            //マスの入手
+                            _masssubject.Value = mass;
+                            // Debug.Log(mass);
+                        }
                         click.OnNext(Unit.Default);
                     }
-                    
                 }
             }
         }
     }
+
+
 }
