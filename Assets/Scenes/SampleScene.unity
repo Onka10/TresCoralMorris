@@ -2149,6 +2149,8 @@ MonoBehaviour:
   P1TAIKI: {fileID: 1591877081}
   P2TAIKI: {fileID: 287039505}
   Mill: {fileID: 328348254}
+  score1: {fileID: 0}
+  score2: {fileID: 0}
 --- !u!114 &580645331 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8761614442564050087, guid: 22d48c0b03261644394b9e97beb34efc, type: 3}
@@ -3865,6 +3867,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 925ca200c2a6a8e4d9e1adf8cc4c291c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DurationSeconds: 0
+  EaseType: 0
 --- !u!1 &1201848716
 GameObject:
   m_ObjectHideFlags: 0
@@ -5016,6 +5020,8 @@ MonoBehaviour:
   WG: {fileID: 1030253809}
   WB: {fileID: 1675579580}
   WA: {fileID: 1126809133}
+  upper: {fileID: 0}
+  downer: {fileID: 0}
   f1: 1
 --- !u!114 &1636657541
 MonoBehaviour:
@@ -5949,6 +5955,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc7b649d0da0ba4fa9079d9048f2f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DurationSeconds: 0
+  EaseType: 0
 --- !u!1 &2032360106 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1825833493338994506, guid: 22d48c0b03261644394b9e97beb34efc, type: 3}
