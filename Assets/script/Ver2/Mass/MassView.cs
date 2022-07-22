@@ -9,37 +9,20 @@ namespace TresCoralMorris
     //そんなにマスは頻繁に変わらないのと、Reactiveな設計が難しいのでMangerに統合
     public class MassView : MonoBehaviour
     {
+        MeshRenderer meshRenderer;
 
+        public void Init(){
+            meshRenderer = this.gameObject.GetComponent<MeshRenderer>();
+        }
 
-        // public GameObject massParent;
-        // private MeshRenderer[] mass = new MeshRenderer[24];
-        // [SerializeField] MassManager _massManager;
+        /// <summary>
+        /// MassのMesh変更
+        /// </summary>
+        public void SetColorMesh(MassColor massColor){
+            var color = ColorChanger.MassColorToColor(massColor);
 
-        // private void Start(){
-        //     for(int i=0 ;i<mass.Length;i++){
-        //         mass[i] = massParent.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>();
-        //     }
-
-        //     _massManager.Mass
-        //     .ObserveReplace()
-        //     .Subscribe(_ => Debug.Log("koi"))
-        //     .AddTo(this);
-            
-        // }
-
-        // public void InitColor(){
-        //     for(int i=0;i<24;i++){
-        //         SetColorMesh(i);
-        //     }
-        // }
-
-        // private void SetColorMesh(int id){
-        //     var massColor = _massManager.GetMassColor(id);
-        //     var color = ColorChanger.MassColorToColor(massColor);
-
-        //     //みための変更
-        //     mass[id].material.DOColor(color,2f);
-        // }
-
+            //みための変更
+            meshRenderer.material.DOColor(color,2f);
+        }
     }
 }

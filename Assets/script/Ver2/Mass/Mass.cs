@@ -22,21 +22,16 @@ namespace TresCoralMorris.MassData
         [SerializeField] private int _point;
 
         //色
-        public IReadOnlyReactiveProperty<MassColor> Color => _color;
-        private readonly ReactiveProperty<MassColor> _color = new ReactiveProperty<MassColor>();
-        [SerializeField] private MassColor SerializeColor;
+        public MassColor Color => _color;
+        [SerializeField]private MassColor _color;
+
         
         //移動可能マス
-        public int[] MovebaleMass => _movebaleMass;
-        [SerializeField] private int[] _movebaleMass = new int[1];
+        public int[] MovableMass => _movableMass;
+        [SerializeField] private int[] _movableMass = new int[1];
         #endregion
 
-
-        void Start(){
-            _color
-            .Subscribe(c => SerializeColor = c)
-            .AddTo(this);
-        }
+        private MassView _massView;
 
 
         //初期化変数
@@ -48,10 +43,15 @@ namespace TresCoralMorris.MassData
             _lane = i/6;
             //ポイントをセット
             _point = i % 6;
-            //移動可能マスを確認
-            SetMovablemass();
 
-            void SetMovablemass(){
+
+            //移動可能マスを確認
+            SetMovableMass();
+
+            _massView = this.gameObject.GetComponent<MassView>();
+            _massView.Init();
+
+            void SetMovableMass(){
                 int id=_id;
                 Queue<int> queue = new Queue <int>();
 
@@ -66,18 +66,20 @@ namespace TresCoralMorris.MassData
                 if(_point!=5)   queue.Enqueue(id+1);
                 else            queue.Enqueue(id-5);
 
-                _movebaleMass = queue.ToArray();
+                _movableMass = queue.ToArray();
             }
         }
 
         public void SetColor(MassColor color){
-            _color.Value = color;
+            _color = color;
+            _massView.SetColorMesh(color);
         }
 
         //movableの中に指定されたマスが存在するかを確認する
-        public bool MobableCheck(int id){
-            for(int i=0;i< _movebaleMass.Length;i++){
-                if(_movebaleMass[i] == id)   return true;
+        public bool MovableCheck(int id){
+            for(int i=0;i< _movableMass.Length;i++){
+                Debug.Log(_movableMass[i] +":"+ id);
+                if(_movableMass[i] == id)   return true;
             }
 
             return false;

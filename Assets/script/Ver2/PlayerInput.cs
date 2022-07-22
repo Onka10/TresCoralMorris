@@ -55,16 +55,16 @@ namespace TresCoralMorris
 
 
                     if(GameManager.I.Phase.Value == GamePhase.Phase2){
-                        Debug.Log(hit.collider.gameObject);
+                        // Debug.Log(hit.collider.gameObject);
 
                         if( hit.collider.gameObject.TryGetComponent<IStone>(out IStone stone) ){
                             Debug.Log("きてます");
                             //石の入手
                             _stoneSubject.Value = stone;
-                            Debug.Log(stone);
+                            Debug.Log(stone+":input");
                         }else
                         if( hit.collider.gameObject.TryGetComponent<IMass>(out IMass mass) ){
-                            Debug.Log("きてます2");
+                            // Debug.Log("きてます2");
                             //マスの入手
                             _masssubject.Value = mass;
                             // Debug.Log(mass);

@@ -9,7 +9,6 @@ namespace TresCoralMorris
     public class Fhase2Manager : MonoBehaviour
     {
         [SerializeField] PlayerInput _playerInput;
-        [SerializeField] TresCoralMorris.GameDate _gameDate;
         [SerializeField] StoneInMass _stoneInMass;
         [SerializeField] MassManager _massManager;
 
@@ -30,9 +29,7 @@ namespace TresCoralMorris
 
         //ターンとまとめるかも
         private int _phase=1;
-
-        //クラス化するかも以下
-        private int[] _milledStone = new int[3];
+        StoneInMass.MillResult millResult;
 
         private IMass _beforeMass;
         private IStone _selectedStone;
@@ -50,6 +47,7 @@ namespace TresCoralMorris
             //各種購読を開始
             //inputをうけとる
             _playerInput.Click
+            .ThrottleFirst(TimeSpan.FromSeconds(3))
             .Subscribe(_ => ExecuteOfTurn())
             .AddTo(this);
 
@@ -70,7 +68,7 @@ namespace TresCoralMorris
             if(_phase==1)        Phase21();
             else if(_phase==2)   Phase22();
             else if(_phase==3)   Phase23();
-            else if(_phase==36)  Phasemill();
+            else if(_phase==36)  PhaseMill();
             else if(_phase==4)   Phase24();
 
             debug_p2log.I.DebugLogPhase(_phase);
@@ -106,11 +104,12 @@ namespace TresCoralMorris
             if(!CheckClick2())return;
 
             //チェックが大丈夫なら次のフェーズへ
-            Debug.Log("チェックを抜けました");
+            Debug.Log("チェックを抜けました1");
             //TODOコマ選択中エフェクト再生
             _beforeMass = mass;
             _selectedStone = stone;
             // EffectManager.I.PlayEffect();
+            SEManager.I.Click();
             debug_p2log.I.DebugLogObj<IStone>(stone);
             _phase++;
 
@@ -118,16 +117,20 @@ namespace TresCoralMorris
             #region 確認用ローカル変数
             //クリックした石がプレイヤー色か確認
             bool CheckClick(){
-                // Debug.Log(stone);
-                // Debug.Log(_turnColor.Value);
                 if(stone.Color.Value == _turnColor.Value)   return true;
-                else    return false;
+                SEManager.I.Cancel();
+                Debug.Log("クリックした石がプレイヤー色ではありません");
+                return false;
             }
 
-            //クリックしたマスがマイカラーと同じ&&マスがグレー
+            //クリックしたマスがマイカラーと同じ&&マスがグレーならセーフ(true)
             bool CheckClick2(){
-                if(_massManager.CheckMassCanMove(mass))    return true;
-                else return false;
+                if(mass.Color == MassColor.Neu)      return true;
+                if(MyColorManager.I.CheckMyColor(mass.Color))    return true;
+
+                Debug.Log("クリックしたマスがマイカラーかグレーではありません");
+                SEManager.I.Cancel();
+                return false;
             }
             #endregion
 
@@ -144,24 +147,26 @@ namespace TresCoralMorris
             //準備
             if(!CheckClick()) return;
             if(!CheckClick2())return;
+            Debug.Log("チェックを抜けました2");
 
             _afterMass = mass;
             _phase++;
 
             #region  確認用ローカル関数
             //クリックしたマスが移動可能なマスか確認
-            //もし選んだマスのMovebaleの中に今選んだマスのidがあれば移動可能
+            //もし選んだマスのMovableの中に今選んだマスのidがあれば移動可能
             bool CheckClick(){
-                if(_beforeMass.MobableCheck(mass.ID)) return true;
-                
+                if(_beforeMass.MovableCheck(mass.ID)) return true;
+                SEManager.I.Cancel();
                 Debug.Log("Movableなますではありません");
                 return false;
             }
 
             //クリックしたマスが移動可能な色か確認
             bool CheckClick2(){
-                if( _gameDate.CheckMobableColor(_turnColor.Value,mass)) return true;
-                Debug.Log("移動可能なますではありません");
+                if(MyColorManager.I.CheckMovableColor(mass.Color)) return true;
+                SEManager.I.Cancel();
+                Debug.Log("MovableColorなますではありません");
                 return false;
             }
             #endregion
@@ -172,29 +177,26 @@ namespace TresCoralMorris
         //石を移動して、ミルチェックを行う
         private void Phase23(){
             //移動
-            //FIXME
-            // _gameDate.SetStone(_turnColor.Value,_afterMass.ID, _selectedStone.ID.Value);
+            _stoneInMass.SetStone(Turn.I.TurnColor.Value, _afterMass.ID,_selectedStone.ID.Value);
 
-            //ミルならミルフェーズへ、無いならフェーズ4へ
-            if(_gameDate.MillCheck(_turnColor.Value,_afterMass))   _phase= 36;
+            //FIXMEミルならミルフェーズへ、無いならフェーズ4へ
+            millResult = _stoneInMass.CheckMill(_afterMass);
+
+            if(millResult.Result)   _phase= 36;
             else    _phase=4;
-            
         }
 
 
         //ミルのときのしょり
-        private void Phasemill(){
+        private void PhaseMill(){
+            Debug.Log("ミル処理します");
             //石を入手
             var stone = _playerInput.GetStone.Value;
             //マスを入手
             var mass = _playerInput.GetMass.Value.ID;
 
-            //クリックされた石がmillされた石にあるかを探索する。存在しないなら-1が返ってくる
-            int checkedMillStone = Array.IndexOf(_milledStone, stone.ID.Value);
-
-            //ミルの対象で無いなら早期リターン
-            if (-1 == checkedMillStone)   return;
-
+            //クリックされた石がmillされた石にあるかを探索する。
+            if (!millResult.IsDelete(stone))   return;
             _stoneInMass.DeleteStone(_turnColor.Value,stone.ID.Value,mass);
             
             //スコア加算
@@ -222,6 +224,13 @@ namespace TresCoralMorris
             //ターン変更
             turn.Value++;
             _phase = 1;
+        }
+
+        public void Cancel(){
+            if(GameManager.I.Phase.Value != GamePhase.Phase2) return;
+            SEManager.I.Cancel();
+            _phase = 1;
+            Debug.Log("もどしました");
         }
     }
 }

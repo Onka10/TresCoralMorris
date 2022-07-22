@@ -110,42 +110,42 @@ namespace TresCoralMorris{
         // }
 
         //ミルチェック
-        public bool MillCheck(PlayerColor turnColor,IMass aftermass){
+        // public bool MillCheck(PlayerColor turnColor,IMass aftermass){
 
-            #region ミルの横判定
-            //配列の実際の値に変換
-            int point= 6 * aftermass.Lane;
+        //     #region ミルの横判定
+        //     //配列の実際の値に変換
+        //     int point= 6 * aftermass.Lane;
 
-            //ミルの横の判定はmassのpointが０１２・２３４・４５０の時のみ
-            if(massinstone[point]==turnColor && massinstone[point+1]==turnColor && massinstone[point+2]==turnColor)    return true;
-            if(massinstone[point+2]==turnColor && massinstone[point+3]==turnColor && massinstone[point+4]==turnColor)    return true;
-            if(massinstone[point+4]==turnColor && massinstone[point+5]==turnColor && massinstone[point]==turnColor)    return true;
-            #endregion
+        //     //ミルの横の判定はmassのpointが０１２・２３４・４５０の時のみ
+        //     if(massinstone[point]==turnColor && massinstone[point+1]==turnColor && massinstone[point+2]==turnColor)    return true;
+        //     if(massinstone[point+2]==turnColor && massinstone[point+3]==turnColor && massinstone[point+4]==turnColor)    return true;
+        //     if(massinstone[point+4]==turnColor && massinstone[point+5]==turnColor && massinstone[point]==turnColor)    return true;
+        //     #endregion
 
-            #region ミルの縦判定
-            int lane= 6 * aftermass.Point;
+        //     #region ミルの縦判定
+        //     int lane= 6 * aftermass.Point;
 
-            //ミルの縦の判定はmassのLaneが012,123の時のみ
-            if(massinstone[lane]==turnColor && massinstone[lane+6]==turnColor && massinstone[lane+12]==turnColor)    return true;
-            if(massinstone[lane+6]==turnColor && massinstone[lane+12]==turnColor && massinstone[lane+18]==turnColor)    return true;
-            #endregion
+        //     //ミルの縦の判定はmassのLaneが012,123の時のみ
+        //     if(massinstone[lane]==turnColor && massinstone[lane+6]==turnColor && massinstone[lane+12]==turnColor)    return true;
+        //     if(massinstone[lane+6]==turnColor && massinstone[lane+12]==turnColor && massinstone[lane+18]==turnColor)    return true;
+        //     #endregion
 
-            return false;
-        }
+        //     return false;
+        // }
 
         //そのマスが、指定されたプレイヤーのmovableカラーに含まれているかを確認する
-        public bool CheckMobableColor(PlayerColor playerColor,IMass checkmass){
+        // public bool CheckMobableColor(PlayerColor playerColor,IMass checkmass){
 
-            //movableカラーか中立ならセーフ
-            if(playerColor==PlayerColor.Black){
-                if(checkmass.Color.Value== MovebaleColorB1.Value || checkmass.Color.Value== MovebaleColorB2.Value)     return true;
-                if(checkmass.Color.Value==MassColor.Neu)         return true;
-            }else if(playerColor==PlayerColor.White){
-                if(checkmass.Color.Value== MovebaleColorW1.Value || checkmass.Color.Value== MovebaleColorW2.Value)     return true;
-                if(checkmass.Color.Value==MassColor.Neu)         return true;
-            }
-            return false;
-        }
+            // //movableカラーか中立ならセーフ
+            // if(playerColor==PlayerColor.Black){
+            //     if(checkmass.Color.Value== MovebaleColorB1.Value || checkmass.Color.Value== MovebaleColorB2.Value)     return true;
+            //     if(checkmass.Color.Value==MassColor.Neu)         return true;
+            // }else if(playerColor==PlayerColor.White){
+            //     if(checkmass.Color.Value== MovebaleColorW1.Value || checkmass.Color.Value== MovebaleColorW2.Value)     return true;
+            //     if(checkmass.Color.Value==MassColor.Neu)         return true;
+            // }
+            // return false;
+        // }
 
         // /// <summary>
         // /// MassのView
@@ -158,18 +158,14 @@ namespace TresCoralMorris{
         //     }
         // }
 
-        public bool StoneCanMove(PlayerColor turncolor,IMass mass){
-            MassColor mycolor;
+        // public bool StoneCanMove(PlayerColor turncolor,IMass mass){
+            // MassColor mycolor;
 
-            if(turncolor==PlayerColor.Black)  mycolor = MyColorB.Value;
-            else    mycolor= MyColorW.Value;
+            // if(turncolor==PlayerColor.Black)  mycolor = MyColorB.Value;
+            // else    mycolor= MyColorW.Value;
 
-            if(mass.Color.Value == mycolor || mass.Color.Value == MassColor.Neu)      return true;
-            return false;
-        }
-
-        public void CollateMovableColor(){
-            // if()
-        }
+            // if(mass.Color.Value == mycolor || mass.Color.Value == MassColor.Neu)      return true;
+            // return false;
+        // }
     }
 }

@@ -16,7 +16,7 @@ public class Turn :Singleton<Turn>
 
         public void TurnChange(){
                 _turnColor.Value = _turnColor.Value == PlayerColor.White ? PlayerColor.Black:PlayerColor.White;
-                Debug.Log(_turnColor.Value);
+                // Debug.Log(_turnColor.Value);
         }
 
         public void FirstCheck(){
