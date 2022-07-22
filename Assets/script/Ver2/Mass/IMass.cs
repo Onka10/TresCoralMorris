@@ -8,7 +8,7 @@ public interface IMass
     public int ID{get;}
     public int Lane{get;}
     public int Point{get;}
-    public IReadOnlyReactiveProperty<MassColor> Color{get;}
-    public int[] MovebaleMass{get;}
-    bool MobableCheck(int id);
+    public MassColor Color{get;}
+    public int[] MovableMass{get;}
+    bool MovableCheck(int id);
 } 

@@ -11,12 +11,8 @@ namespace TresCoralMorris
     {
         // UIがまだ
 
-        public IReactiveProperty<PlayerColor> TurnColor  => _turnColor;
-        private readonly ReactiveProperty<PlayerColor> _turnColor = new ReactiveProperty<PlayerColor>();
-
         public IObservable<Unit> OnReloadView => _reload;
         private readonly Subject<Unit> _reload = new Subject<Unit>();
-
         private readonly ReactiveProperty<int> _turn = new ReactiveProperty<int>(0);
 
         [SerializeField] PlayerInput _playerInput;
@@ -69,7 +65,7 @@ namespace TresCoralMorris
             //マスのidを入手
             int massID = _playerInput.GetMass.Value.ID;
             //マスの色を入手
-            var getMassColor = _playerInput.GetMass.Value.Color.Value;
+            var getMassColor = _playerInput.GetMass.Value.Color;
 
             var turn = Turn.I.TurnColor.Value;
 
@@ -78,7 +74,7 @@ namespace TresCoralMorris
 
                 ////まだ置ける色があるか判定
                 if(BPlayerSetable[(int)getMassColor]>0){
-                    // Debug.Log(getmasscolor+"はまだおける");
+                    // Debug.Log(getMassColor+"はまだおける");
                     BPlayerSetable[(int)getMassColor] -=1;
                 }else if(BPlayerSetable[0]==1){
                     // Debug.Log("any消費");
@@ -90,13 +86,14 @@ namespace TresCoralMorris
                 //石をおく
                 _stoneInMass.SetStone(PlayerColor.Black, massID,_blackStoneNum);
                 _blackStoneNum++;
+                SEManager.I.Put();
                 
                 _turn.Value++;
             }else if(turn==PlayerColor.White){
 
                 ////まだ置ける色があるか判定
                 if(WPlayerSetable[(int)getMassColor]>0){
-                    // Debug.Log(getmasscolor+"はまだおける");
+                    // Debug.Log(getMassColor+"はまだおける");
                     WPlayerSetable[(int)getMassColor] -=1;
                 }else if(WPlayerSetable[0]==1){
                     // Debug.Log("any消費");
@@ -109,6 +106,7 @@ namespace TresCoralMorris
                 _stoneInMass.SetStone(PlayerColor.White, massID,_whiteStoneNum);
                 _whiteStoneNum++;
                 _turn.Value++;
+                SEManager.I.Put();
             }
         }
 

@@ -33,6 +33,7 @@ namespace TresCoralMorris{
         }
 
         public void SelectMyColorForButton(int color){
+            SEManager.I.Click();
             if(Turn.I.TurnColor.Value == PlayerColor.Black)         B =  (MassColor)Enum.ToObject(typeof(MassColor), color);
             else if(Turn.I.TurnColor.Value == PlayerColor.White)    W =  (MassColor)Enum.ToObject(typeof(MassColor), color);
 
@@ -40,28 +41,8 @@ namespace TresCoralMorris{
         }
 
         private void IssueMyColors(){
-            MyColorManager.I.SetMyColorForB(C(B,W));
-            MyColorManager.I.SetMyColorForW(C(W,B));
-            
-            MyColors C(MassColor mycolor,MassColor enemycolor){
-                MassColor move1 = MassColor.Neu;
-                MassColor move2 = MassColor.Neu;
-
-                if(enemycolor==MassColor.Red){
-                    move1 = MassColor.Green;
-                    move2 = MassColor.Blue;
-                }else if(enemycolor==MassColor.Green){
-                    move1 = MassColor.Red;
-                    move2 = MassColor.Blue;
-                }else if(enemycolor==MassColor.Blue){
-                    move1 = MassColor.Red;
-                    move2 = MassColor.Green;
-                }
-
-                if(move1 == MassColor.Neu)  throw new Exception("mycolor や enemycolorが正しくありません");
-                MyColors myColors = new MyColors(mycolor,move1,move2);
-                return myColors;
-            }
+            MyColorManager.I.SetMyColorForB(new MyColors(B,W));
+            MyColorManager.I.SetMyColorForW(new MyColors(W,B));
         }
 
         private void NextPhase(){

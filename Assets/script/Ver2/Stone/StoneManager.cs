@@ -49,20 +49,20 @@ namespace TresCoralMorris{
         /// </summary>
         public void MoveStone(PlayerColor color,int stone_id,int mass_id){
             //移動先の座標
-            Vector3 movedpotion = GamePositionData.GetMassPos(mass_id);
+            Vector3 movedPotion = ObjectPositionData.GetMassPos(mass_id);
 
-            if(color == PlayerColor.Black)  _BStonePos[stone_id].position =movedpotion;
-            else  _WStonePos[stone_id].position =movedpotion;
+            if(color == PlayerColor.Black)  _BStonePos[stone_id].position =movedPotion;
+            else  _WStonePos[stone_id].position =movedPotion;
         }
 
 
         public void MillMoveStone(PlayerColor color,int stone_id){
             //移動先の座標
             //FIXME
-            Vector3 movedpotion = GamePositionData.GetMillPos();
+            Vector3 movedPotion = ObjectPositionData.GetMillPos();
 
-            if(color == PlayerColor.Black)  _BStonePos[stone_id].position =movedpotion;
-            else  _WStonePos[stone_id].position =movedpotion;
+            if(color == PlayerColor.Black)  _BStonePos[stone_id].position =movedPotion;
+            else  _WStonePos[stone_id].position =movedPotion;
         }
 
     }

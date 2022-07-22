@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class GamePositionData : MonoBehaviour
+public class ObjectPositionData : MonoBehaviour
 {
         private static Vector3[] massPos = new Vector3[24];
         [SerializeField] GameObject massParent;

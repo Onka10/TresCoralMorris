@@ -7,20 +7,19 @@ using TresCoralMorris.MassData;
 
 namespace TresCoralMorris{
     /// <summary>
-    /// マス全体に何かする時、データの入力処理とViewのクラス
+    /// マス全体に何かする時、データの入力処理と
     /// </summary>
     public class MassManager : MonoBehaviour
     {
         public GameObject massParent;
 
         private Mass[] mass = new Mass[24];
-        private MeshRenderer[] massRenderer = new MeshRenderer[24];
+
 
         private void Start(){
             //キャッシュ
             for(int i=0 ;i<mass.Length;i++){
                 mass[i] = massParent.transform.GetChild(i).gameObject.GetComponent<Mass>();
-                massRenderer[i] = massParent.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>();
             }
 
             GameManager.I.Phase
@@ -30,15 +29,15 @@ namespace TresCoralMorris{
         }
 
         public void Init(){
-            //data
+            //データの初期化
             for(int i=0;i<mass.Length;i++){
                 mass[i].Init(i);
             }
 
-            //color
+            //colorの初期化
             int[] counter = new int[3];
 
-            for(int index=0;index<massRenderer.Length;index++){
+            for(int index=0;index<mass.Length;index++){
                 int colorNum = Random.Range(0,3);
                 while(counter[colorNum]== 8){
                     colorNum=(colorNum+1)%3;
@@ -49,17 +48,16 @@ namespace TresCoralMorris{
                 //変更
                 MassColor massColor = (MassColor)colorNum+1;
                 mass[index].SetColor(massColor);
-                SetColorMesh(index);
+                // SetColorMesh(index);
             }
         }
-
 
         /// <summary>
         /// 指定したidのマスを中立化
         /// </summary>
         public void NeutralizationMassColor(int id){
             mass[id].SetColor(MassColor.Neu);
-            SetColorMesh(id);
+            // SetColorMesh(id);
         }
 
         /// <summary>
@@ -70,36 +68,13 @@ namespace TresCoralMorris{
             List<int> grays = new List<int>();
 
             for(int i=0 ;i<mass.Length;i++){
-                if(mass[i].Color.Value == MassColor.Neu)    grays.Add(i);
+                if(mass[i].Color == MassColor.Neu)    grays.Add(i);
             }
 
             //TODOCountが0で良いの？nullじゃ無くて？そこの確認がまだ
             //checkクラスを生成して返す
             if(grays.Count==0)  return new CheckGrayMass();
             else return new CheckGrayMass(grays.ToArray());
-        }
-
-        /// <summary>
-        /// MassのView
-        /// </summary>
-        private void SetColorMesh(int id){
-            var massColor = mass[id].Color.Value;
-            var color = ColorChanger.MassColorToColor(massColor);
-
-            //みための変更
-            massRenderer[id].material.DOColor(color,2f);
-        }
-
-        public bool CheckMassCanMove(IMass mass){
-            PlayerColor playerColor = Turn.I.TurnColor.Value;
-            
-            MassColor massColor;
-            if(playerColor == PlayerColor.Black)  massColor = MyColorManager.I.BPlayerMyColors.MyColor;
-            else massColor = MyColorManager.I.WPlayerMyColors.MyColor;
-            
-
-            if(mass.Color.Value ==  massColor|| mass.Color.Value == MassColor.Neu)      return true;
-            return false;
         }
     }
 }
