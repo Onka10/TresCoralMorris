@@ -15,9 +15,6 @@ namespace TresCoralMorris
         public IObservable<Unit> OnReloadView => _reload;
         private readonly Subject<Unit> _reload = new Subject<Unit>();
 
-        // public IReactiveProperty<PlayerColor> TurnColor  => _turnColor;
-        private readonly ReactiveProperty<PlayerColor> _turnColor = new ReactiveProperty<PlayerColor>();
-
         private readonly ReactiveProperty<int> turn = new ReactiveProperty<int>();
 
 
@@ -27,8 +24,17 @@ namespace TresCoralMorris
         public IReactiveProperty<int> WScore  => _wPlayerScore;
         private readonly ReactiveProperty<int> _wPlayerScore = new ReactiveProperty<int>();
 
+        enum Sequence{
+            Ready=0,
+            SelectStone=1,
+            SelectMass=2,
+            Move=3,
+            End=4,
+            Mill=36
+        }
         //ターンとまとめるかも
-        private int _phase=1;
+        private Sequence _sequence=Sequence.SelectStone;
+
         StoneInMass.MillResult millResult;
 
         private IMass _beforeMass;
@@ -47,31 +53,26 @@ namespace TresCoralMorris
             //各種購読を開始
             //inputをうけとる
             _playerInput.Click
-            .ThrottleFirst(TimeSpan.FromSeconds(3))
+            .ThrottleFirst(TimeSpan.FromSeconds(2))
             .Subscribe(_ => ExecuteOfTurn())
             .AddTo(this);
 
             //ターンの変更
             turn
-            .Subscribe(_ => Change_turnColor())
+            .Skip(1)
+            .Subscribe(_ => Turn.I.TurnChange())
             .AddTo(this);
 
             _reload.OnNext(Unit.Default);
         }
 
-        private void Change_turnColor(){
-            _turnColor.Value = turn.Value % 2==0 ? PlayerColor.Black:PlayerColor.White;
-            // Debug.Log("今は"+_turnColor);
-        }
-
         private void ExecuteOfTurn(){
-            if(_phase==1)        Phase21();
-            else if(_phase==2)   Phase22();
-            else if(_phase==3)   Phase23();
-            else if(_phase==36)  PhaseMill();
-            else if(_phase==4)   Phase24();
+            if(_sequence==Sequence.SelectStone)        Phase21();
+            else if(_sequence==Sequence.SelectMass)   Phase22();
+            else if(_sequence==Sequence.Mill)  PhaseMill();
 
-            debug_p2log.I.DebugLogPhase(_phase);
+
+            debug_p2log.I.DebugLogPhase(_sequence.ToString());
         }
 
         private void Phase20(){
@@ -91,11 +92,11 @@ namespace TresCoralMorris
 
         //動かす石を決める
         private void Phase21(){
-            // Debug.Log("フェーズ2");
+            //エラーチェック
+            if(_playerInput.GetStone.Value==null &&  _playerInput.GetMass.Value==null) return;
+
             //石を入手
             var stone = _playerInput.GetStone.Value;
-            // Debug.Log(stone);
-            
             //マスを入手
             var mass = _playerInput.GetMass.Value;
 
@@ -111,13 +112,13 @@ namespace TresCoralMorris
             // EffectManager.I.PlayEffect();
             SEManager.I.Click();
             debug_p2log.I.DebugLogObj<IStone>(stone);
-            _phase++;
+            _sequence++;
 
 
             #region 確認用ローカル変数
             //クリックした石がプレイヤー色か確認
             bool CheckClick(){
-                if(stone.Color.Value == _turnColor.Value)   return true;
+                if(stone.Color.Value == Turn.I.TurnColor.Value)   return true;
                 SEManager.I.Cancel();
                 Debug.Log("クリックした石がプレイヤー色ではありません");
                 return false;
@@ -138,8 +139,8 @@ namespace TresCoralMorris
 
         //移動先のマスを探す
         private void Phase22(){
-            //石を入手
-            var stone = _playerInput.GetStone.Value;
+            //エラーチェック
+            if(_playerInput.GetMass.Value==null) return;
             
             //マスを入手
             var mass = _playerInput.GetMass.Value;
@@ -150,7 +151,7 @@ namespace TresCoralMorris
             Debug.Log("チェックを抜けました2");
 
             _afterMass = mass;
-            _phase++;
+            Phase23();
 
             #region  確認用ローカル関数
             //クリックしたマスが移動可能なマスか確認
@@ -176,14 +177,17 @@ namespace TresCoralMorris
 
         //石を移動して、ミルチェックを行う
         private void Phase23(){
+            Debug.Log("移動処理します");
+            _sequence=Sequence.Move;
             //移動
             _stoneInMass.SetStone(Turn.I.TurnColor.Value, _afterMass.ID,_selectedStone.ID.Value);
 
             //FIXMEミルならミルフェーズへ、無いならフェーズ4へ
+            Debug.Log(_afterMass);
             millResult = _stoneInMass.CheckMill(_afterMass);
 
-            if(millResult.Result)   _phase= 36;
-            else    _phase=4;
+            if(millResult.Result)   _sequence= Sequence.Mill;
+            else    Phase24();
         }
 
 
@@ -197,19 +201,21 @@ namespace TresCoralMorris
 
             //クリックされた石がmillされた石にあるかを探索する。
             if (!millResult.IsDelete(stone))   return;
-            _stoneInMass.DeleteStone(_turnColor.Value,stone.ID.Value,mass);
+            _stoneInMass.DeleteStone(stone.ID.Value,mass);
             
             //スコア加算
-            if(_turnColor.Value==PlayerColor.Black) _bPlayerScore.Value++;
-            else if(_turnColor.Value==PlayerColor.White) _wPlayerScore.Value++;
+            if(Turn.I.TurnColor.Value==PlayerColor.Black) _bPlayerScore.Value++;
+            else if(Turn.I.TurnColor.Value==PlayerColor.White) _wPlayerScore.Value++;
 
-            _phase=4;
+            _sequence=Sequence.End;
 
         }
 
         private void Phase24(){
+            Debug.Log("ターン終了処理します");
+            _sequence=Sequence.End;
             //白のターン終わりのみ発動
-            if(_turnColor.Value==PlayerColor.White){
+            if(Turn.I.TurnColor.Value==PlayerColor.White){
                 //チェック
                 var checkGrayMass  = _massManager.GetGrayMass();
 
@@ -223,14 +229,20 @@ namespace TresCoralMorris
 
             //ターン変更
             turn.Value++;
-            _phase = 1;
+            _sequence = Sequence.SelectStone;
+            Debug.Log("ターン終了");
         }
 
         public void Cancel(){
             if(GameManager.I.Phase.Value != GamePhase.Phase2) return;
             SEManager.I.Cancel();
-            _phase = 1;
+            _sequence = Sequence.SelectStone;
             Debug.Log("もどしました");
+        }
+
+        public void ColorChange(){
+            Phase24();
+            _reload.OnNext(Unit.Default);
         }
     }
 }

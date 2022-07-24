@@ -8,11 +8,8 @@ namespace TresCoralMorris
 {
     public class PlayerInput : MonoBehaviour
     {
-        // public IObservable<Unit> GetMass => _masssubject;
-        // private readonly Subject<Unit> _masssubject = new Subject<Unit>();
-
-        public IReadOnlyReactiveProperty<IMass> GetMass => _masssubject;
-        private readonly ReactiveProperty<IMass> _masssubject = new ReactiveProperty<IMass>();
+        public IReadOnlyReactiveProperty<IMass> GetMass => _massSubject;
+        private readonly ReactiveProperty<IMass> _massSubject = new ReactiveProperty<IMass>();
         public IReadOnlyReactiveProperty<IStone> GetStone => _stoneSubject;
         private readonly ReactiveProperty<IStone> _stoneSubject = new ReactiveProperty<IStone>();
 
@@ -22,23 +19,9 @@ namespace TresCoralMorris
         Vector3 touchScreenPosition;
         void Update(){
             if (Input.GetMouseButtonDown(0)) {
-                // touchScreenPosition = Input.mousePosition;
-                // Camera  gameCamera      = Camera.main;
-                // Ray     touchPointToRay = gameCamera.ScreenPointToRay( touchScreenPosition );
-                // RaycastHit hitInfo = new RaycastHit();
-
-                // if( Physics.Raycast( touchPointToRay, out hitInfo ) ){
-                //     if( hitInfo.collider.gameObject.TryGetComponent<IMass>(out IMass mass) ){
-                //         Debug.Log("クリック"+mass.ID);
-                //         _masssubject.Value = mass;
-                        
-                //         click.OnNext(Unit.Default);
-                //     }
-                // }
-
-
                 
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Debug.DrawRay (ray.origin, ray.direction * 100, Color.red, 5, false);
 
                 //FIXMEすごく汚い
                 foreach (RaycastHit hit in Physics.RaycastAll(ray)){
@@ -46,31 +29,39 @@ namespace TresCoralMorris
                     if(GameManager.I.Phase.Value == GamePhase.Phase1){
                         if( hit.collider.gameObject.TryGetComponent<IMass>(out IMass mass) ){
                             //マスの入手
-                            _masssubject.Value = mass;
-                            // Debug.Log(mass);
-                            
+                            _massSubject.Value = mass;
+
                             click.OnNext(Unit.Default);
+                            //初期化
+                            _massSubject.Value = null;
                         }
                     }
 
 
                     if(GameManager.I.Phase.Value == GamePhase.Phase2){
-                        // Debug.Log(hit.collider.gameObject);
-
-                        if( hit.collider.gameObject.TryGetComponent<IStone>(out IStone stone) ){
-                            Debug.Log("きてます");
-                            //石の入手
-                            _stoneSubject.Value = stone;
-                            Debug.Log(stone+":input");
-                        }else
+                        // Debug.Log("開始");
                         if( hit.collider.gameObject.TryGetComponent<IMass>(out IMass mass) ){
-                            // Debug.Log("きてます2");
                             //マスの入手
-                            _masssubject.Value = mass;
-                            // Debug.Log(mass);
+                            // Debug.Log("mass入手");
+                            _massSubject.Value = mass;
                         }
-                        click.OnNext(Unit.Default);
+                        if( hit.collider.gameObject.TryGetComponent<IStone>(out IStone stone) ){
+                            //石の入手
+                            // Debug.Log("stone入手");
+                            _stoneSubject.Value = stone;
+                        }
+                        // Debug.Log("<color=red>Hit!</color>"+hit.collider.gameObject);
                     }
+                }
+
+                //forReachで抜けてから
+                if(GameManager.I.Phase.Value == GamePhase.Phase2){
+                    // Debug.Log("<color=blue>mass</color>"+_massSubject.Value);
+                    // Debug.Log("<color=blue>stone!</color>"+_stoneSubject.Value);
+                    click.OnNext(Unit.Default);
+                    //Warning!!送ったあとに初期化
+                    _massSubject.Value=null;
+                    _stoneSubject.Value=null;
                 }
             }
         }

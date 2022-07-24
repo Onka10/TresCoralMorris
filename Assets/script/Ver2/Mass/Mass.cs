@@ -78,7 +78,7 @@ namespace TresCoralMorris.MassData
         //movableの中に指定されたマスが存在するかを確認する
         public bool MovableCheck(int id){
             for(int i=0;i< _movableMass.Length;i++){
-                Debug.Log(_movableMass[i] +":"+ id);
+                // Debug.Log(_movableMass[i] +"b:a"+ id);
                 if(_movableMass[i] == id)   return true;
             }
 

@@ -46,9 +46,7 @@ public class MyColorManager : Singleton<MyColorManager>
     /// <summary>
     /// ボタンで色を変える
     /// </summary>
-    public void ChangeMyColor(int c){
-        MassColor mycolor =  (MassColor)Enum.ToObject(typeof(MassColor), c);
-
+    public void ChangeMyColor(MassColor mycolor){
         if(Turn.I.TurnColor.Value == PlayerColor.Black)    bPlayerMyColor = new MyColors(mycolor,wPlayerMyColor.MyColor); 
         else if(Turn.I.TurnColor.Value == PlayerColor.White)    wPlayerMyColor = new MyColors(mycolor,bPlayerMyColor.MyColor);
     }
