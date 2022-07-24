@@ -9,7 +9,8 @@ public class ColorChanger
     static private Dictionary<MassColor, Color> MassColorDictionary = new Dictionary<MassColor, Color>(){
             {MassColor.Red,Color.red},
             {MassColor.Blue,Color.blue},
-            {MassColor.Green,Color.green},   
+            {MassColor.Green,Color.green}, 
+            {MassColor.Neu,Color.gray},   
     };
 
     static private Dictionary<PlayerColor, Color> PlayerColorDictionary = new Dictionary<PlayerColor, Color>(){

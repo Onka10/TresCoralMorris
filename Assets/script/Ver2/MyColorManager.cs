@@ -1,7 +1,10 @@
 using System;
-
+using UnityEngine;
 public class MyColorManager : Singleton<MyColorManager>
 {
+    [SerializeField] Color MycolorB;
+    [SerializeField] Color MycolorW;
+
     public MyColors BPlayerMyColors => bPlayerMyColor;
     private MyColors bPlayerMyColor;
 
@@ -49,5 +52,8 @@ public class MyColorManager : Singleton<MyColorManager>
     public void ChangeMyColor(MassColor mycolor){
         if(Turn.I.TurnColor.Value == PlayerColor.Black)    bPlayerMyColor = new MyColors(mycolor,wPlayerMyColor.MyColor); 
         else if(Turn.I.TurnColor.Value == PlayerColor.White)    wPlayerMyColor = new MyColors(mycolor,bPlayerMyColor.MyColor);
+
+        MycolorB = ColorChanger.MassColorToColor(bPlayerMyColor.MyColor);
+        MycolorW = ColorChanger.MassColorToColor(wPlayerMyColor.MyColor);
     }
 }

@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using DG.Tweening;
+using System.Collections.Generic;
 using TresCoralMorris.MassData;
 
 namespace TresCoralMorris{
@@ -14,7 +13,7 @@ namespace TresCoralMorris{
         public GameObject massParent;
 
         private Mass[] mass = new Mass[24];
-
+        GrayMassList _grayMassList;
 
         private void Start(){
             //キャッシュ
@@ -48,33 +47,30 @@ namespace TresCoralMorris{
                 //変更
                 MassColor massColor = (MassColor)colorNum+1;
                 mass[index].SetColor(massColor);
-                // SetColorMesh(index);
             }
         }
 
         /// <summary>
         /// 指定したidのマスを中立化
         /// </summary>
-        public void NeutralizationMassColor(int id){
+        public void NeutralizationMassColor(){
+            int id = (int)UnityEngine.Random.Range(0f, _grayMassList.NotGrayArray.Count);
+
             mass[id].SetColor(MassColor.Neu);
-            // SetColorMesh(id);
         }
 
         /// <summary>
-        /// グレイのチェック結果を返す
+        /// グレイマスのチェック結果を返すtrueなら全部グレー
         /// </summary>
-        public CheckGrayMass GetGrayMass(){
-            //grayの数を確認
-            List<int> grays = new List<int>();
+        public bool CheckGrayMass(){
+            _grayMassList = new GrayMassList();
 
             for(int i=0 ;i<mass.Length;i++){
-                if(mass[i].Color == MassColor.Neu)    grays.Add(i);
+                if(mass[i].Color == MassColor.Neu)    _grayMassList.AddGray(i);
+                else                                  _grayMassList.Add(i);
             }
 
-            //TODOCountが0で良いの？nullじゃ無くて？そこの確認がまだ
-            //checkクラスを生成して返す
-            if(grays.Count==0)  return new CheckGrayMass();
-            else return new CheckGrayMass(grays.ToArray());
+            return _grayMassList.IsALLGray;
         }
     }
 }

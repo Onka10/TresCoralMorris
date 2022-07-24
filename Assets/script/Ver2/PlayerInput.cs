@@ -50,7 +50,7 @@ namespace TresCoralMorris
                             // Debug.Log("stone入手");
                             _stoneSubject.Value = stone;
                         }
-                        // Debug.Log("<color=red>Hit!</color>"+hit.collider.gameObject);
+                        Debug.Log("<color=red>Hit!</color>"+hit.collider.gameObject);
                     }
                 }
 

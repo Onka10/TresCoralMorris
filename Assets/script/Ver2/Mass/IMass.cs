@@ -1,5 +1,3 @@
-using UniRx;
-
 /// <summary>
 /// 基本的にゲッタのみ
 /// </summary>
