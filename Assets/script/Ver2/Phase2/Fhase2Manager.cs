@@ -101,8 +101,8 @@ namespace TresCoralMorris
             var mass = _playerInput.GetMass.Value;
 
             //駄目な選択のチェック
-            if(!CheckClick()) return;
-            if(!CheckClick2())return;
+            if(!Phase2Check.Check21A(stone.Color.Value)) return;
+            if(!Phase2Check.Check21B(mass.Color)) return;
 
             //チェックが大丈夫なら次のフェーズへ
             Debug.Log("チェックを抜けました1");
@@ -114,27 +114,6 @@ namespace TresCoralMorris
             debug_p2log.I.DebugLogObj<IStone>(stone);
             _sequence++;
 
-
-            #region 確認用ローカル変数
-            //クリックした石がプレイヤー色か確認
-            bool CheckClick(){
-                if(stone.Color.Value == Turn.I.TurnColor.Value)   return true;
-                SEManager.I.Cancel();
-                Debug.Log("クリックした石がプレイヤー色ではありません");
-                return false;
-            }
-
-            //クリックしたマスがマイカラーと同じ&&マスがグレーならセーフ(true)
-            bool CheckClick2(){
-                if(mass.Color == MassColor.Neu)      return true;
-                if(MyColorManager.I.CheckMyColor(mass.Color))    return true;
-
-                Debug.Log("クリックしたマスがマイカラーかグレーではありません");
-                SEManager.I.Cancel();
-                return false;
-            }
-            #endregion
-
         }
 
         //移動先のマスを探す
@@ -145,32 +124,14 @@ namespace TresCoralMorris
             //マスを入手
             var mass = _playerInput.GetMass.Value;
 
-            //準備
-            if(!CheckClick()) return;
-            if(!CheckClick2())return;
+            //駄目な選択のチェック
+            if(!Phase2Check.Check22A(_beforeMass,mass.ID)) return;
+            if(!Phase2Check.Check22B(mass.Color)) return;
             Debug.Log("チェックを抜けました2");
 
             _afterMass = mass;
+            SEManager.I.Click();
             Phase23();
-
-            #region  確認用ローカル関数
-            //クリックしたマスが移動可能なマスか確認
-            //もし選んだマスのMovableの中に今選んだマスのidがあれば移動可能
-            bool CheckClick(){
-                if(_beforeMass.MovableCheck(mass.ID)) return true;
-                SEManager.I.Cancel();
-                Debug.Log("Movableなますではありません");
-                return false;
-            }
-
-            //クリックしたマスが移動可能な色か確認
-            bool CheckClick2(){
-                if(MyColorManager.I.CheckMovableColor(mass.Color)) return true;
-                SEManager.I.Cancel();
-                Debug.Log("MovableColorなますではありません");
-                return false;
-            }
-            #endregion
         }
 
 
@@ -202,13 +163,13 @@ namespace TresCoralMorris
             //クリックされた石がmillされた石にあるかを探索する。
             if (!millResult.IsDelete(stone))   return;
             _stoneInMass.DeleteStone(stone.ID.Value,mass);
+            SEManager.I.Click();
             
             //スコア加算
             if(Turn.I.TurnColor.Value==PlayerColor.Black) _bPlayerScore.Value++;
             else if(Turn.I.TurnColor.Value==PlayerColor.White) _wPlayerScore.Value++;
 
-            _sequence=Sequence.End;
-
+            Phase24();
         }
 
         private void Phase24(){
@@ -216,15 +177,10 @@ namespace TresCoralMorris
             _sequence=Sequence.End;
             //白のターン終わりのみ発動
             if(Turn.I.TurnColor.Value==PlayerColor.White){
-                //チェック
-                var checkGrayMass  = _massManager.GetGrayMass();
+                Debug.Log("グレー処理");
 
-                //trueなら処理実行
-                if(checkGrayMass.IsGrayMass)    _massManager.NeutralizationMassColor(checkGrayMass.GetRandomGrayMass());
-                else{
-                    //色完全消去ならゲーム終了
-                    GameManager.I.EndPhase();
-                }
+                if(_massManager.CheckGrayMass())   GameManager.I.EndPhase();
+                _massManager.NeutralizationMassColor();
             } 
 
             //ターン変更

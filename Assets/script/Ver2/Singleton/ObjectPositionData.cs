@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -25,7 +23,7 @@ public class ObjectPositionData : MonoBehaviour
         }
 
         public static Vector3 GetMillPos(){
-            Vector3 pos = new Vector3(0f,0f,0f);
+            Vector3 pos = new Vector3(0f,-10f,0f);
 
             return pos;
         }
