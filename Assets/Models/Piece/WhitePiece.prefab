@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5579270991273968639}
   - component: {fileID: 8845728263852117082}
   - component: {fileID: 6712230091937101968}
-  - component: {fileID: 4055964359118692977}
   - component: {fileID: 4395982857037781329}
+  - component: {fileID: 4055964359118692977}
+  - component: {fileID: 2975226827889342833}
   m_Layer: 0
   m_Name: WhitePiece
   m_TagString: Untagged
@@ -84,20 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4055964359118692977
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5054830730819311941}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -6299929326560297564, guid: 5f535de3d7cc2ef4e83e52bb487f91fe, type: 3}
 --- !u!114 &4395982857037781329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,3 +97,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab9d52cbe841614ba59b6e0a7aed780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &4055964359118692977
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5054830730819311941}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6299929326560297564, guid: 5f535de3d7cc2ef4e83e52bb487f91fe, type: 3}
+--- !u!65 &2975226827889342833
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5054830730819311941}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.010647092, y: 0.011645965, z: 0.023724686}
+  m_Center: {x: 0, y: -0.0003678312, z: 0.011862314}

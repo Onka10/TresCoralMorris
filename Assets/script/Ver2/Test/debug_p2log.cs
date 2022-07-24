@@ -7,7 +7,7 @@ using UniRx;
 public class debug_p2log : Singleton<debug_p2log>
 {
     [SerializeField] Text objectText;
-    [SerializeField] Text TurnText;
+    [SerializeField] Image TurnIma;
     [SerializeField] Text PhaseText;
 
     private void start(){
@@ -22,10 +22,10 @@ public class debug_p2log : Singleton<debug_p2log>
 
 
     public void DebugLogTurn(){
-        TurnText.text = Turn.I.TurnColor.Value.ToString();
+        TurnIma.color = ColorChanger.PlayerColorToColor(Turn.I.TurnColor.Value);
     }
 
-    public void DebugLogPhase(int phase){
-        PhaseText.text = phase.ToString();
+    public void DebugLogPhase(string phase){
+        PhaseText.text = phase;
     }
 }

@@ -5,6 +5,7 @@ using UniRx;
 
 public class Turn :Singleton<Turn>
 {
+        [SerializeField] Color show;
         public IReactiveProperty<PlayerColor> TurnColor  => _turnColor;
         private readonly ReactiveProperty<PlayerColor> _turnColor = new ReactiveProperty<PlayerColor>();
         
@@ -16,7 +17,7 @@ public class Turn :Singleton<Turn>
 
         public void TurnChange(){
                 _turnColor.Value = _turnColor.Value == PlayerColor.White ? PlayerColor.Black:PlayerColor.White;
-                // Debug.Log(_turnColor.Value);
+                show = ColorChanger.PlayerColorToColor(_turnColor.Value);
         }
 
         public void FirstCheck(){

@@ -19,7 +19,7 @@ public class ObjectPositionData : MonoBehaviour
             if(massPos[id] == null) throw new  Exception("id見ろ");
 
             Vector3 pos = massPos[id];
-            pos.y = 1.4f;
+            pos.y = 0.5f;
 
             return pos;
         }

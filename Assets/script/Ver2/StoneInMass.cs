@@ -8,28 +8,24 @@ namespace TresCoralMorris{
     /// </summary>
     public class StoneInMass : MonoBehaviour
     {
-        public enum StoneStats{
-            Empty,
-            IN
-        }
         public class StoneData{
 
-            public StoneStats INStone  => stoneStats;
-            private StoneStats stoneStats;
+            public bool IsInStone  => stoneStats;
+            private bool stoneStats;
             public IStone Data => data;
             private IStone data;
 
             public StoneData(){
-                stoneStats = StoneStats.Empty;
+                stoneStats = false;
             }
 
             public void SetStone(IStone stone){
-                stoneStats = StoneStats.IN;
+                stoneStats = true;
                 data = stone;
             }
 
             public void DeleteStone(){
-                stoneStats = StoneStats.Empty;
+                stoneStats = false;
                 data = null;
             }
         }
@@ -68,6 +64,7 @@ namespace TresCoralMorris{
         void Start(){
             for(int i =0;i<_stoneInMass.Length;i++){
                 _stoneInMass[i] = new StoneData();
+                // Debug.Log(_stoneInMass[i].INStone);
             }
         }
 
@@ -86,15 +83,14 @@ namespace TresCoralMorris{
         /// <summary>
         /// ミル移動用
         /// </summary>
-        public void DeleteStone(PlayerColor pc,int stoneID,int massID){
+        public void DeleteStone(int stoneID,int massID){
             //管理
             _stoneInMass[massID].DeleteStone();
-            _stoneManager.MillMoveStone(pc,stoneID);
+            _stoneManager.MillMoveStone(Turn.I.TurnColor.Value,stoneID);
         }
 
         public bool IsInStone(int massID){
-            if(_stoneInMass[massID].INStone == StoneStats.IN)   return true;
-            else return false;
+            return _stoneInMass[massID].IsInStone;
         }
 
         /// <summary>
@@ -106,38 +102,60 @@ namespace TresCoralMorris{
             PlayerColor stoneColor2;
             PlayerColor stoneColor3;
 
+            //返すやつ
             MillResult result = new MillResult();
 
+            //もしヒットすれば代入
+            Point();
+            Lane();
+            return result;
+
             #region ミルの横判定
-            //列のミルを全てチェック
-            int id = afterMass.Lane * 6;
+            void Point(){
+                //列のミルを全てチェック
+                int point = afterMass.Lane * 6;
 
-            for(int i=0;i < 3;i++){
-                stoneColor1 = _stoneInMass[id + 2*i].Data.Color.Value;//0,2,4
-                stoneColor2 = _stoneInMass[id+1 + 2*i].Data.Color.Value;//1,3,5
-                stoneColor3 = _stoneInMass[id+2 + 2*i].Data.Color.Value;//2,4,0
+                for(int i=0;i < 3;i++){
+                    if(!_stoneInMass[point + 2*i].IsInStone) return;
+                    stoneColor1 = _stoneInMass[point + 2*i].Data.Color.Value;//0,2,4
 
-                if(stoneColor1==turnColor && stoneColor2==turnColor && stoneColor3==turnColor)    MakeResult(_stoneInMass[id + 2*i].Data,_stoneInMass[id+1 + 2*i].Data,_stoneInMass[id+2 + 2*i].Data);
+                    if(!_stoneInMass[point+1 + 2*i].IsInStone) return;
+                    stoneColor2 = _stoneInMass[point+1 + 2*i].Data.Color.Value;//1,3,5
+
+                    if(!_stoneInMass[point+2 + 2*i].IsInStone) return;
+                    stoneColor3 = _stoneInMass[point+2 + 2*i].Data.Color.Value;//2,4,0
+
+                    if(stoneColor1==turnColor && stoneColor2==turnColor && stoneColor3==turnColor){
+                        MakeResult(_stoneInMass[point + 2*i].Data,_stoneInMass[point+1 + 2*i].Data,_stoneInMass[point+2 + 2*i].Data);
+                    }
+                }
+            }
+
+            #endregion
+
+            #region ミルの横判定
+            void Lane(){
+                //行のミルを全てチェック
+                int lane = afterMass.Point;
+
+                if(!_stoneInMass[lane].IsInStone) return;
+                stoneColor1 = _stoneInMass[lane].Data.Color.Value;
+                if(!_stoneInMass[lane+6].IsInStone) return;
+                stoneColor2 = _stoneInMass[lane+6].Data.Color.Value;
+                if(!_stoneInMass[lane+12].IsInStone) return;
+                stoneColor3 = _stoneInMass[lane+12].Data.Color.Value;
+                if(stoneColor1==turnColor && stoneColor2==turnColor && stoneColor3==turnColor)    MakeResult(_stoneInMass[lane].Data,_stoneInMass[lane+6].Data,_stoneInMass[lane+12].Data);
+
+                if(!_stoneInMass[lane+6].IsInStone) return;
+                stoneColor1 = _stoneInMass[lane+6].Data.Color.Value;
+                if(!_stoneInMass[lane+12].IsInStone) return;
+                stoneColor2 = _stoneInMass[lane+12].Data.Color.Value;
+                if(!_stoneInMass[lane+18].IsInStone) return;
+                stoneColor3 = _stoneInMass[lane+18].Data.Color.Value;
+                if(stoneColor1==turnColor && stoneColor2==turnColor && stoneColor3==turnColor)    MakeResult(_stoneInMass[lane+6].Data,_stoneInMass[lane+12].Data,_stoneInMass[lane+18].Data);
+                
             }
             #endregion
-
-            #region ミルの横判定
-            //行のミルを全てチェック
-            int lane = afterMass.Point * 6;
-
-            stoneColor1 = _stoneInMass[lane].Data.Color.Value;
-            stoneColor2 = _stoneInMass[lane+6].Data.Color.Value;
-            stoneColor3 = _stoneInMass[lane+12].Data.Color.Value;
-            if(stoneColor1==turnColor && stoneColor2==turnColor && stoneColor3==turnColor)    MakeResult(_stoneInMass[lane].Data,_stoneInMass[lane+6].Data,_stoneInMass[lane+12].Data);
-
-            stoneColor1 = _stoneInMass[lane+6].Data.Color.Value;
-            stoneColor2 = _stoneInMass[lane+12].Data.Color.Value;
-            stoneColor3 = _stoneInMass[lane+18].Data.Color.Value;
-            if(stoneColor1==turnColor && stoneColor2==turnColor && stoneColor3==turnColor)    MakeResult(_stoneInMass[lane+6].Data,_stoneInMass[lane+12].Data,_stoneInMass[lane+18].Data);
-            
-            #endregion
-
-            return result;
 
             void MakeResult(IStone m0,IStone m1,IStone m2){
                 result.SetMill(m0,m1,m2);
